@@ -1,2 +1,3 @@
-# Creative-Computation-I
-Rachel's course work for Pippin's CART253
+# cart253 - Creative Computation I
+
+Rachel's course work for Pippin's CART253 
