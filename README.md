@@ -1,3 +1,3 @@
-# cart253 - Creative Computation I
+Creative Computation I
 
 Rachel's course work for Pippin's CART253 
