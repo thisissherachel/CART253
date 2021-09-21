@@ -18,7 +18,8 @@ let circle = {
     x: 0,
     y: 250,
     size: 200,
-    speed: 1,
+    speed: 2,
+    fill:255
 }
 
 // setup()
@@ -67,14 +68,25 @@ function setup() {
 //     ellipse(circle.x,circle.y,circle.size);
 
 //**introducing random numbers
-function draw() {
-    background(backgroundShade);
-    circle.speed = random()
-    circle.x += circle.speed;
-    ellipse(circle.x,circle.y,circle.size);
+// function draw() {
+    // background(backgroundShade);
+    // circle.speed = random()
+    // circle.x += circle.speed;
+    // ellipse(circle.x,circle.y,circle.size);
 
     // let randomNumber = random(1,10);
     // console.log(randomNumber);
+
+//**introducing map and constrain
+function draw() {
+    background(backgroundShade);
+    circle.x += circle.speed;
+
+    circle.size = map(mouseY,height,0,50,500);
+
+    circle.fill = map(mouseX,0,width,0,255);
+    fill(circle.fill);
+    ellipse(circle.x,circle.y,circle.size);
 
 
 }
