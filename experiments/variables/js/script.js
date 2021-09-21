@@ -4,12 +4,22 @@
 Variables experiment
 Rachel B Richard
 **************************************************/
+
+//**variables
 let backgroundShade = 0;
-let circleX = 0;
-let circleY = 250;
-let circleSize = 100;
-let circleSpeed = 2;
-let circleAcceleration = 0.25;
+// let circleX = 0;
+// let circleY = 250;
+// let circleSize = 200;
+// let circleSpeed = 2;
+// let circleAcceleration = 0.25;
+
+//**objects with properties
+let circle = {
+    x: 0,
+    y: 250,
+    size: 200,
+    speed: 1,
+}
 
 // setup()
 function setup() {
@@ -42,13 +52,29 @@ function setup() {
 //     ellipse(circleX,circleY,circleSize);
 
 //**changing variables
+// function draw() {
+//     background(backgroundShade);
+//     // circleSize = circleSize + 1
+//     // circleY = circleY - 1
+//     circleX += circleSpeed;
+//     // circleSpeed += circleAcceleration;
+//     ellipse(circleX,circleY,circleSize);
+
+//**working with objects
+// function draw() {
+//     background(backgroundShade);
+//     circle.x += circle.speed;
+//     ellipse(circle.x,circle.y,circle.size);
+
+//**introducing random numbers
 function draw() {
     background(backgroundShade);
-    circleSize = circleSize + 1
-    circleY = circleY - 1
-    circleX += circleSpeed;
-    circleSpeed += circleAcceleration;
-    ellipse(circleX,circleY,circleSize);
+    circle.speed = random()
+    circle.x += circle.speed;
+    ellipse(circle.x,circle.y,circle.size);
+
+    // let randomNumber = random(1,10);
+    // console.log(randomNumber);
 
 
 }
