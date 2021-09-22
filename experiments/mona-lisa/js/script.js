@@ -2,12 +2,6 @@
 This is the Mona Lisa.
 Rachel B. Richard
 
-PLAN:
-x create a canvas
-x fill the background
-- add detail to background
-- block out the basic shapes (face, body, smile, hair, mountains, water)
-
 "use strict";
 
 

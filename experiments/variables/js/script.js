@@ -81,9 +81,7 @@ function setup() {
 function draw() {
     background(backgroundShade);
     circle.x += circle.speed;
-
     circle.size = map(mouseY,height,0,50,500);
-
     circle.fill = map(mouseX,0,width,0,255);
     fill(circle.fill);
     ellipse(circle.x,circle.y,circle.size);
