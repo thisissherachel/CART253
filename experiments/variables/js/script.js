@@ -1,7 +1,7 @@
 "use strict";
 
 /**************************************************
-Variables experiment
+Variables NOTES
 Rachel B Richard
 **************************************************/
 
