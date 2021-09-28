@@ -1,10 +1,10 @@
 "use strict";
 
 /**************************************************
-Template p5 project
-Pippin Barr
+Dodging Covid19
+Rachel B. Richard
 
-Here is a description of this template p5 project.
+ACTICITY 04
 **************************************************/
 
 // setup()
