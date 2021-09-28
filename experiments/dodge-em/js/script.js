@@ -13,8 +13,6 @@ Assignment 02
 **************************************************/
 
 
-
-
 // setup()
 //
 // Description of setup() goes here.
