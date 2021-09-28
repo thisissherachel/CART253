@@ -30,7 +30,7 @@ let simon = {
     maxSize: 300,
     speed: 2,
     fill: 255,
-};
+}
 
 let angle = 0;
 let angleChange = 0.01;
@@ -38,12 +38,12 @@ let angleChange = 0.01;
 
 // setup()
 function setup() {
-    createCanvas(windowWidth, windowHeight)
+    createCanvas(windowWidth, windowHeight);
 }
 
 // draw()
 function draw() {
-    background (0)
+    background (0);
     fill(trisha.fill);
 
     //circle moving
@@ -52,7 +52,7 @@ function draw() {
 
    //**triangle controlling the changing colour
     trisha.fill = map(mouseY,0,width,0,255);
-    trisha.fill = constrain(trisha.fill, 0, width)
+    trisha.fill = constrain(trisha.fill, 0, width);
     triangle(mouseX,mouseY-20,mouseX+20,mouseY+20,mouseX-20,mouseY+20);
 
     //**square changing size
