@@ -31,7 +31,7 @@ let negativityTwo = { //creating another negativity object
   size: 80,
   vx: 0,
   vy: 0,
-  speed: 20,
+  speed: 10,
 };
 
 let negativityThree = { //creating another negativity object
@@ -40,7 +40,7 @@ let negativityThree = { //creating another negativity object
   size: 80,
   vx: 0,
   vy: 0,
-  speed: 20,
+  speed: 30,
 };
 
 let user = { //creating the object for the interactive mouse
@@ -63,6 +63,8 @@ let user = { //creating the object for the interactive mouse
 // for images and asets going to be used in the running grogram
 function preload(){
   negativity.image = loadImage('assets/images/negativity.png');
+  negativityTwo.image = loadImage('assets/images/negativity.png');
+  negativityThree.image = loadImage('assets/images/negativity.png');
   user.happyImage = loadImage('assets/images/happy.png');
   user.sadImage = loadImage('assets/images/sad.png');
 }
@@ -151,19 +153,31 @@ function draw() {
   user.y = user.y + user.vy;
 
   //check for catching negativity
-  let d = dist(user.x,user.y,negativity.x,negativity.y || user.x,user.y,negativityTwo.x,negativityTwo.y || user.x,user.y,negativityThree.x,negativityThree.y); //finding the distance between user and negativity
-  if (d < negativity.size/2 + user.size/2 || d < negativityTwo.size/2 + user.size/2 || d < negativityThree.size/2 + user.size/2 ) { //finding when they overlap
+  let d = dist(user.x, user.y, negativity.x, negativity.y); //finding the distance between user and negativity
+  if (d < negativity.size / 2 + user.size / 2) { //finding when they overlap
     user.currentImage = user.sadImage;
     user.caught = true;
-    noLoop(); //stop the simulation once above is true
   }
+
+  let d2 = dist(user.x, user.y, negativityTwo.x, negativityTwo.y);
+  if (d2 < negativityTwo.size / 2 + user.size / 2) {
+    user.currentImage = user.sadImage;
+    user.caught = true;
+  }
+
+  let d3 = dist(user.x, user.y, negativityThree.x, negativityThree.y);
+  if (d3 < negativityThree.size / 2 + user.size / 2) {
+    user.currentImage = user.sadImage;
+    user.caught = true;
+  }
+
 
   //user display
   imageMode(CENTER);
   image(user.currentImage,user.x,user.y,100,100);
 
   if (user.caught) {
-  noLoop();
+  noLoop(); //stop the simulation once above is true
   }
 }
 
