@@ -151,7 +151,7 @@ Rachel B. Richard
 //
 // let dangerZone = {
 //   x: 250,
-//   y: 250]==========
+//   y: 250
 //   size: 150,
 // }
 //
