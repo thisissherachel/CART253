@@ -3,18 +3,15 @@
 /**************************************************
 Dodge-em
 Rachel B. Richard
-
 EXERCISE 02
-
 1. Change the way the user controls their user
 2. Add at least one new if-statement (including at least an else)
 3. Change the way the simulation looks
 4. Use at least one image
-
 Program is about avoiding the negativity. You are happy until you touch the negativity object.
-The environment is happy with hearts until you touch object, it switches to darkness and sluggyness.
-
+Press ENTER to start over.
 **************************************************/
+
 
 let negativity = { //creating the negativity object
   x: 0,
@@ -59,6 +56,7 @@ let user = { //creating the object for the interactive mouse
   caught: false,
 };
 
+
 //PRELOAD
 // for images and asets going to be used in the running grogram
 function preload(){
@@ -95,8 +93,11 @@ function setup() {
 // DRAW()
 //for frame by frame program running
 function draw() {
-  background(255,255,255);
+
+  background(254, 255, 173);
+
   handleInput()
+
 
   //negativity displays
   imageMode(CENTER);
@@ -177,7 +178,12 @@ function draw() {
   image(user.currentImage,user.x,user.y,100,100);
 
   if (user.caught) {
-  noLoop(); //stop the simulation once above is true
+    negativity.speed = 0;
+    negativityTwo.speed = 0;
+    negativityThree.speed = 0;
+    user.vx = 0;
+    user.vy = 0;
+    user.acceleration = 0;
   }
 }
 
@@ -190,20 +196,25 @@ function handleInput() { //settings for resetting the game
 }
 
 function reset() { //resetting all of properties to starting values
+
   negativity.x = 0;
-  negativity.y = 250;
-  negativity.y = 0;
+  negativity.y = random(0, height);
+  negativity.speed = 20;
 
   negativityTwo.x = 0;
-  negativityTwo.y = 250;
-  negativityTwo.y = 0;
+  negativityTwo.y = random(0, height);
+  negativityTwo.speed = 10;
 
   negativityThree.x = 0;
-  negativityThree.y = 250;
-  negativityThree.y = 0;
+  negativityThree.y = random(0, height);
+  negativityThree.speed = 30;
 
   user.x = 250;
   user.y = 250;
   user.vx = 0;
   user.ax = 1;
+  user.acceleration = 1;
+  user.vx = 0;
+  user.vy = 0;
+  user.caught = false;
 }
