@@ -270,7 +270,89 @@ Rachel B. Richard
 
 // 5.6 keyboard inputs
 
-let bg = 0;
+// let bg = 0;
+//
+// let circle = {
+//   x: 250,
+//   y: 250,
+//   size: 100,
+//   vx: 0,
+//   vy: 0,
+//   speed: 5,
+// }
+//
+// function setup() {
+//   createCanvas(500,500);
+// }
+//
+// function draw() {
+//   background(bg);
+//
+// // //display what key is pressed adn have it attaches to events
+// //   textAlign(CENTER,CENTER);
+// //   textSize(20);
+// //   textStyle(BOLD);
+// //   stroke(255);
+// //   text(key,width/2,height/2); //displays in text the key you pressed
+// //   // text(keyCode,width/2,height/2) //from the 's keycode set' fing the correspondance on google
+// //
+// // function keyPressed() {
+// //   if (key === 'a') { //reads if youpressed the key 'a' to then react
+// //     bg = 0;
+// //   }
+// //   else if (key === 'b') {
+// //     bg = 127;
+// //   }
+// //   else if (key === 'c') {
+// //     bg = 255;
+// //   }
+// // }
+//
+// //   //display rectangle when key is held down
+// //   if (keyIsDown(65)) { //with key code 65=a
+// //     rectMode(CENTER);
+// //     rect(250,250,100,100);
+// //   }
+// // }
+//
+// //allow for program to read what is pressed on keyboard
+//   handleInput(); //dealing with user input
+//   move();
+//   display();
+// }
+//
+//   function handleInput() {
+//     if (keyIsDown(LEFT_ARROW)) {
+//       circle.vx = -circle.speed;
+//     }
+//     else if (keyIsDown(RIGHT_ARROW)) {
+//       circle.vx = circle.speed;
+//     }
+//     else { //if neither of the above are true
+//       circle.vx = 0;
+//     }
+//
+//     if (keyIsDown(UP_ARROW)) {
+//       circle.vy = -circle.speed;
+//     }
+//     else if (keyIsDown(DOWN_ARROW)) {
+//       circle.vy = circle.speed;
+//     }
+//     else { //if neither of the above are true
+//       circle.vy = 0;
+//     }
+//   }
+//
+//   function move() { //movement of circle
+//     circle.x += circle.vx;
+//     circle.y += circle.vy;
+//   }
+//   function display() { //display circle
+//     ellipse(circle.x,circle.y,circle.size);
+//   }
+
+
+//5.7 automated movement
 
 let circle = {
   x: 250,
@@ -278,75 +360,42 @@ let circle = {
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 5,
+  speed: 2,
 }
-
 function setup() {
   createCanvas(500,500);
 }
 
 function draw() {
-  background(bg);
+  background(0);
 
-// //display what key is pressed adn have it attaches to events
-//   textAlign(CENTER,CENTER);
-//   textSize(20);
-//   textStyle(BOLD);
-//   stroke(255);
-//   text(key,width/2,height/2); //displays in text the key you pressed
-//   // text(keyCode,width/2,height/2) //from the 's keycode set' fing the correspondance on google
-//
-// function keyPressed() {
-//   if (key === 'a') { //reads if youpressed the key 'a' to then react
-//     bg = 0;
-//   }
-//   else if (key === 'b') {
-//     bg = 127;
-//   }
-//   else if (key === 'c') {
-//     bg = 255;
-//   }
-// }
+  //making a circle randomly move around the canvas
+  let change = random();
+  if (change < 0.05) { //5% chances of the time the circle will move
+    circle.vx = random(-circle.speed,circle.speed);
+    circle.vy = random(-circle.speed,circle.speed);
+  }
 
-//   //display rectangle when key is held down
-//   if (keyIsDown(65)) { //with key code 65=a
-//     rectMode(CENTER);
-//     rect(250,250,100,100);
-//   }
-// }
+  //making the circle follow the mouse (make all speed opposites to make circle avoid mouse)
+  let dx = circle.x - mouseX; //how far the mouse is from the position
+  let dy = circle.y - mouseY;
 
-//allow for program to read what is pressed on keyboard
-  handleInput(); //dealing with user input
-  move();
-  display();
+  if (dx < 0) { //mouse to the right of circle
+    circle.vx = circle.speed;
+  }
+  else if (dx > 0) { //mouse to the left of circle
+    circle.vx = -circle.speed;
+  }
+
+  if (dy < 0) { //mouse to the above of circle
+    circle.vy = circle.speed;
+  }
+  else if (dx > 0) { //mouse to the below of circle
+    circle.vy = -circle.speed;
+  }
+
+   circle.x += circle.vx;
+   circle.y += circle.vy;
+
+   ellipse(circle.x,circle.y,circle.size);
 }
-
-  function handleInput() {
-    if (keyIsDown(LEFT_ARROW)) {
-      circle.vx = -circle.speed;
-    }
-    else if (keyIsDown(RIGHT_ARROW)) {
-      circle.vx = circle.speed;
-    }
-    else { //if neither of the above are true
-      circle.vx = 0;
-    }
-
-    if (keyIsDown(UP_ARROW)) {
-      circle.vy = -circle.speed;
-    }
-    else if (keyIsDown(DOWN_ARROW)) {
-      circle.vy = circle.speed;
-    }
-    else { //if neither of the above are true
-      circle.vy = 0;
-    }
-  }
-
-  function move() { //movement of circle
-    circle.x += circle.vx;
-    circle.y += circle.vy;
-  }
-  function display() { //display circle
-    ellipse(circle.x,circle.y,circle.size);
-  }
