@@ -198,71 +198,155 @@ Rachel B. Richard
 
 //5.5 states
 
+// let circle = {
+//   x: 0,
+//   y: 250,
+//   size: 100,
+//   vx: 0,
+//   vy: 0,
+//   speed: 2,
+// }
+//
+// let state = `title`; //using string as variable where the possibilities are `title`, `animation`, and `end`
+//
+//
+// function setup() {
+//   createCanvas(500,500);
+//   circle.vx = circle.speed;
+//
+//   textSize(20); //setting defaults for title screens
+//   textAlign(CENTER,CENTER);
+// }
+//
+// function draw() {
+//   background(0);
+//
+//   if (state === `title`) {
+//     title();
+//   }
+//
+//   else if(state === `animation`) {
+//     animation();
+//   }
+//
+//   else if(state === `end`) {
+//     end();
+//   }
+// }
+//
+// function title() {
+//   //title
+//   fill(255);
+//   text(`Life.`,width/2,height/2);
+// }
+//
+// function animation() {
+//   //animation
+//   circle.x += circle.vx; //movement
+//   circle.y += circle.vy;
+//
+//   if (circle.x > width) {
+//     state = `end`;
+//   }
+//
+//   ellipse(circle.x,circle.y,circle.size); //display
+// }
+//
+// function end() {
+//   //end
+//   fill(255);
+//   text(`That's that.`,width/2,height/2);
+// }
+//
+// function keyPressed() { //allows you to switch states with a key being pressed
+//   if (state === `title`) {
+//     state = `animation`;
+//   }
+//   if (state === `end`) {
+//     state = `title`;
+//   }
+// }
+
+
+// 5.6 keyboard inputs
+
+let bg = 0;
+
 let circle = {
-  x: 0,
+  x: 250,
   y: 250,
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 2,
+  speed: 5,
 }
-
-let state = `title`; //using string as variable where the possibilities are `title`, `animation`, and `end`
-
 
 function setup() {
   createCanvas(500,500);
-  circle.vx = circle.speed;
-
-  textSize(20); //setting defaults for title screens
-  textAlign(CENTER,CENTER);
 }
 
 function draw() {
-  background(0);
+  background(bg);
 
-  if (state === `title`) {
-    title();
-  }
+// //display what key is pressed adn have it attaches to events
+//   textAlign(CENTER,CENTER);
+//   textSize(20);
+//   textStyle(BOLD);
+//   stroke(255);
+//   text(key,width/2,height/2); //displays in text the key you pressed
+//   // text(keyCode,width/2,height/2) //from the 's keycode set' fing the correspondance on google
+//
+// function keyPressed() {
+//   if (key === 'a') { //reads if youpressed the key 'a' to then react
+//     bg = 0;
+//   }
+//   else if (key === 'b') {
+//     bg = 127;
+//   }
+//   else if (key === 'c') {
+//     bg = 255;
+//   }
+// }
 
-  else if(state === `animation`) {
-    animation();
-  }
+//   //display rectangle when key is held down
+//   if (keyIsDown(65)) { //with key code 65=a
+//     rectMode(CENTER);
+//     rect(250,250,100,100);
+//   }
+// }
 
-  else if(state === `end`) {
-    end();
-  }
+//allow for program to read what is pressed on keyboard
+  handleInput(); //dealing with user input
+  move();
+  display();
 }
 
-function title() {
-  //title
-  fill(255);
-  text(`Life.`,width/2,height/2);
-}
+  function handleInput() {
+    if (keyIsDown(LEFT_ARROW)) {
+      circle.vx = -circle.speed;
+    }
+    else if (keyIsDown(RIGHT_ARROW)) {
+      circle.vx = circle.speed;
+    }
+    else { //if neither of the above are true
+      circle.vx = 0;
+    }
 
-function animation() {
-  //animation
-  circle.x += circle.vx; //movement
-  circle.y += circle.vy;
-
-  if (circle.x > width) {
-    state = `end`;
+    if (keyIsDown(UP_ARROW)) {
+      circle.vy = -circle.speed;
+    }
+    else if (keyIsDown(DOWN_ARROW)) {
+      circle.vy = circle.speed;
+    }
+    else { //if neither of the above are true
+      circle.vy = 0;
+    }
   }
 
-  ellipse(circle.x,circle.y,circle.size); //display
-}
-
-function end() {
-  //end
-  fill(255);
-  text(`That's that.`,width/2,height/2);
-}
-
-function keyPressed() { //allows you to switch states with a key being pressed
-  if (state === `title`) {
-    state = `animation`;
+  function move() { //movement of circle
+    circle.x += circle.vx;
+    circle.y += circle.vy;
   }
-  if (state === `end`) {
-    state = `title`;
+  function display() { //display circle
+    ellipse(circle.x,circle.y,circle.size);
   }
-}
