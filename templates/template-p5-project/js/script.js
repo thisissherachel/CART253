@@ -1,22 +1,18 @@
 "use strict";
 
 /**************************************************
-Template p5 project
-Pippin Barr
-
-Here is a description of this template p5 project.
+Project
+Rachel B. Richard
 **************************************************/
 
 // setup()
-//
-// Description of setup() goes here.
+//for full program running setup
 function setup() {
 
 }
 
 // draw()
-//
-// Description of draw() goes here.
+//for frame by frame program running
 function draw() {
 
 }

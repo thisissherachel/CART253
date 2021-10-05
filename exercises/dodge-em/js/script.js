@@ -3,11 +3,13 @@
 /**************************************************
 Dodge-em
 Rachel B. Richard
+
 EXERCISE 02
 1. Change the way the user controls their user
 2. Add at least one new if-statement (including at least an else)
 3. Change the way the simulation looks
 4. Use at least one image
+
 Program is about avoiding the negativity. You are happy until you touch the negativity object.
 Press ENTER to start over.
 **************************************************/
