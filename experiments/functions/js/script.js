@@ -161,36 +161,108 @@ Rachel B. Richard
 
 
 //5.4 text
+//
+// //template strings
+// let name = "Rachel";
+// let state = "happy";
+// let string = `Hello I'm ${name} and I said "I am so ${state}"`;
+//
+// let thisisme = {
+//   string: `${string}`,
+//   x: 250,
+//   y: 250,
+//   vx: 2,
+//   vy: 1,
+// }
+//
+// function setup() {
+//   createCanvas(500,500);
+// }
+//
+// function draw() {
+//   background(255);
+//
+//   thisisme.x += thisisme.vx;
+//   thisisme.y += thisisme.vy;
+//
+//   fill(0,0,255);
+//   stroke(200,50,200);
+//
+//   textAlign(CENTER,CENTER);
+//   textSize(20);
+//   textStyle(BOLD);
+//
+//   text(thisisme.string,thisisme.x,thisisme.y);
+// }
 
-//template strings
-let name = "Rachel";
-let state = "happy";
-let string = `Hello I'm ${name} and I said "I am so ${state}"`;
 
-let thisisme = {
-  string: `${string}`,
-  x: 250,
+//5.5 states
+
+let circle = {
+  x: 0,
   y: 250,
-  vx: 2,
-  vy: 1,
+  size: 100,
+  vx: 0,
+  vy: 0,
+  speed: 2,
 }
+
+let state = `title`; //using string as variable where the possibilities are `title`, `animation`, and `end`
+
 
 function setup() {
   createCanvas(500,500);
+  circle.vx = circle.speed;
+
+  textSize(20); //setting defaults for title screens
+  textAlign(CENTER,CENTER);
 }
 
 function draw() {
-  background(255);
+  background(0);
 
-  thisisme.x += thisisme.vx;
-  thisisme.y += thisisme.vy;
+  if (state === `title`) {
+    title();
+  }
 
-  fill(0,0,255);
-  stroke(200,50,200);
+  else if(state === `animation`) {
+    animation();
+  }
 
-  textAlign(CENTER,CENTER);
-  textSize(20);
-  textStyle(BOLD);
+  else if(state === `end`) {
+    end();
+  }
+}
 
-  text(thisisme.string,thisisme.x,thisisme.y);
+function title() {
+  //title
+  fill(255);
+  text(`Life.`,width/2,height/2);
+}
+
+function animation() {
+  //animation
+  circle.x += circle.vx; //movement
+  circle.y += circle.vy;
+
+  if (circle.x > width) {
+    state = `end`;
+  }
+
+  ellipse(circle.x,circle.y,circle.size); //display
+}
+
+function end() {
+  //end
+  fill(255);
+  text(`That's that.`,width/2,height/2);
+}
+
+function keyPressed() { //allows you to switch states with a key being pressed
+  if (state === `title`) {
+    state = `animation`;
+  }
+  if (state === `end`) {
+    state = `title`;
+  }
 }
