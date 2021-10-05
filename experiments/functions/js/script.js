@@ -1,10 +1,8 @@
 "use strict";
 
 /**************************************************
-Template p5 project
-Pippin Barr
-
-Here is a description of this template p5 project.
+functions NOTES
+Rachel B. Richard
 **************************************************/
 
 // setup()
