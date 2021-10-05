@@ -10,6 +10,11 @@ EXERCISE 03
 3. Add at least one extra function
 4. Add at least one extra ending
 
+Try to catch love. You have a limited time to catch it.
+If you catch it fast "whoa that was fast! lucky you <3"
+If you catch it "YAY <3"
+If you dont manage to catch it within the frames "aweeeee </3"
+
 **************************************************/
 
 let circle1 = {
