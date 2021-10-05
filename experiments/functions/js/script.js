@@ -84,77 +84,113 @@ Rachel B. Richard
 
 //5.3 Return values
 
-let circle = {
+// let circle = {
+//   x: 250,
+//   y: 250,
+//   size: 100,
+//   vx: 0,
+//   vy: 0,
+// }
+//
+// function setup() {
+//   createCanvas(500,500);
+//
+// //   let hotCelsius = toCelsius(100); //calls variable in function so we can see it working
+// //   console.log(`100 degrees Fahrenheit is ${hotCelsius} degrees celsius.`); //writes value is console
+// //
+// //   let coldCelsius = toCelsius(10);
+// //   console.log(`100 degrees Fahrenheit is ${coldCelsius} degrees celsius.`); //writes value is console
+// // }
+//
+//   reset();
+// }
+//
+// function draw() {
+//   background(0);
+//
+//   // let x = random(0,width); //random is a value that returns us a value (return value: calculates something for us)
+//   // let y = random(0,height);
+//   //
+//   // ellipse(x,y,100); //theoretically cyou could call function inside the variables here instead of before
+// // }
+//
+//   //creating a return values
+//   // function toCelsius(fahrenheit) { //function that calculates celcius from a fahrenheit value
+//   //   let celsius = (fahrenheit - 32) * 5/9; //calculates
+//   //   return celsius; //returns value
+// //   }
+// // }
+//
+//   //return values in booleans
+//     move();
+//     checkOffscreen();
+//     display();
+//   }
+//
+//   function move() { //movement of circle
+//     circle.x += circle.vx;
+//     circle.y += circle.vy;
+//   }
+//
+//   function checkOffscreen() {
+//     if (checkIsOffscreen()){ //function returns boolean which decides if reset function is a go ro not
+//       reset();
+//     }
+//   }
+//
+//   function checkIsOffscreen() {
+//     if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) { //check all possibilities of being off screen
+//       return true;
+//     }
+//     else {
+//       return false;
+//     }
+//   }
+//
+//
+//   function display() { //display circle
+//     ellipse(circle.x,circle.y,circle.size);
+//   }
+//
+//   function reset() { //reset all values
+//     circle.x = 250; //back to center
+//     circle.y = 250;
+//     circle.vx = random(-10,10); //random speed and angle
+//     circle.vy = random(-10,10);
+//   }
+
+
+//5.4 text
+
+//template strings
+let name = "Rachel";
+let state = "happy";
+let string = `Hello I'm ${name} and I said "I am so ${state}"`;
+
+let thisisme = {
+  string: `${string}`,
   x: 250,
   y: 250,
-  size: 100,
-  vx: 0,
-  vy: 0,
+  vx: 2,
+  vy: 1,
 }
 
 function setup() {
   createCanvas(500,500);
-
-//   let hotCelsius = toCelsius(100); //calls variable in function so we can see it working
-//   console.log('100 degrees Fahrenheit is ${hotCelsius} degrees celsius.'); //writes value is console
-//
-//   let coldCelsius = toCelsius(10);
-//   console.log('100 degrees Fahrenheit is ${coldCelsius} degrees celsius.'); //writes value is console
-// }
-
-  reset();
 }
 
 function draw() {
-  background(0);
+  background(255);
 
-  // let x = random(0,width); //random is a value that returns us a value (return value: calculates something for us)
-  // let y = random(0,height);
-  //
-  // ellipse(x,y,100); //theoretically cyou could call function inside the variables here instead of before
-// }
+  thisisme.x += thisisme.vx;
+  thisisme.y += thisisme.vy;
 
-  //creating a return values
-  // function toCelsius(fahrenheit) { //function that calculates celcius from a fahrenheit value
-  //   let celsius = (fahrenheit - 32) * 5/9; //calculates
-  //   return celsius; //returns value
-//   }
-// }
+  fill(0,0,255);
+  stroke(200,50,200);
 
-  //return values in booleans
-    move();
-    checkOffscreen();
-    display();
-  }
+  textAlign(CENTER,CENTER);
+  textSize(20);
+  textStyle(BOLD);
 
-  function move() { //movement of circle
-    circle.x += circle.vx;
-    circle.y += circle.vy;
-  }
-
-  function checkOffscreen() {
-    if (checkIsOffscreen()){ //function returns boolean which decides if reset function is a go ro not
-      reset();
-    }
-  }
-
-  function checkIsOffscreen() {
-    if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) { //check all possibilities of being off screen
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-
-  function display() { //display circle
-    ellipse(circle.x,circle.y,circle.size);
-  }
-
-  function reset() { //create a function for code that is seen often. you can now call the function instead of copy/paste
-    circle.x = 250; //back to center
-    circle.y = 250;
-    circle.vx = random(-10,10); //random speed and angle
-    circle.vy = random(-10,10);
-  }
+  text(thisisme.string,thisisme.x,thisisme.y);
+}
