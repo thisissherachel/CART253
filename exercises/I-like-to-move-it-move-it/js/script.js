@@ -4,7 +4,7 @@
 I like to move it move it
 Rachel B. Richard
 
-ASSIGNMENT 01
+EXERCISE 01
 **************************************************/
 
 
