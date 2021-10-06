@@ -13,14 +13,14 @@ EXERCISE 03
 Try to catch love. You have a limited time to catch it.
 If you catch it fast "whoa that was fast! lucky you <3"
 If you catch it "YAY <3"
-If you dont manage to catch it within the frames "aweeeee </3"
+If you dont manage to catch it within the frames "awe </3 better luck next time"
 
 **************************************************/
 
 let love = { //program controlled object
   x: 100,
   y: 100,
-  size: 200,
+  size: 100,
   vx: 0,
   vy: 0,
   speed: 50,
@@ -29,7 +29,7 @@ let love = { //program controlled object
 let you = { //user controlled object
   x: 500,
   y: 500,
-  size: 200,
+  size: 100,
   vx: 0,
   vy: 0,
   speed: 20,
@@ -38,16 +38,18 @@ let you = { //user controlled object
   inloveImage: undefined,
   darnImage: undefined,
   gotit: false,
+  gotitfast: false,
+  toolate: false,
 };
 
-let state = `title`; // Can be: title, simulation, yay, wow, awe
+let state = `title`; // Can be: title, simulation, fastinlove, inlove, toolate
 
 //PRELOAD
 // for images and asets going to be used in the running grogram
 function preload(){
   love.image = loadImage('assets/images/heart.png');
   you.searchingImage = loadImage('assets/images/eyes.png');
-  you.inloveImage = loadImage('assets/images/inlove.png');
+  you.inloveImage = loadImage('assets/images/inlove.png'); //DIDNT MANAGE TO MAKE THE IMAGES CHANGE
   you.darnImage = loadImage('assets/images/darn.png');
 }
 
@@ -56,36 +58,42 @@ function preload(){
 //for full program running setup
 function setup() {
   createCanvas(windowWidth,windowHeight);
-
-  // //setting up love object
-  // catchMe();
-
-  // //removing cursor
-  // noCursor();
+  imageMode(CENTER);
 }
 
 //DRAW
 //for frame by frame program running
 function draw() {
   background(255);
+  handleInput();
 
    if (state === `title`) {
      title();
    }
    else if (state === `simulation`) {
      simulation();
+     frameCounter();
    }
-   else if (state === `wow`) {
-     fastinlove();
+
+   //within 60*2 frames
+   if (you.gotitfast) {
+     you.currentImage = you.inloveImage; //change image //!!IMAGES DONT CHANGE AND IDK WHY
+     state === `fastinlove`
+     fastinlove(); //displays text
    }
-   else if (state === `yay`) {
-     inlove();
+   //within 60*5 frames
+   else if (you.gotit) {
+     you.currentImage = you.inloveImage; //change image
+     state === `inlove`
+     inlove(); //displays text
    }
-   else if (state === `awe`) {
-     nolove();
+   //past 60*5 frames
+   else if (you.toolate) {
+     you.currentImage = you.darnImage; //change image
+     state === `toolate`
+     nolove(); //displays text
    }
 }
-
 
 //STATES
 function title() {
@@ -101,24 +109,26 @@ function title() {
   textSize(20);
   fill(200,100,100);
   textAlign(CENTER,CENTER);
-  text(`(use arrow keys to move)`,width/2,2*height/3);
+  text(`Press ENTER to start :) \r\n (use arrow keys to move)`,width/2,2*height/3); //!!DONT KNOW HOW TO CENTER JUSTIFY WHILE CENTER POSITIONED
   pop();
 }
 
 function simulation() {
-  movementLove();
   displayLove();
-  movementYou();
   displayYou();
-  game();
+  movementLove();
+  movementYou();
+  checkforFastinlove();
+  checkforInlove();
+  checkforToolate();
 }
 
 function fastinlove() {
   push();
   textSize(69);
   fill(255,150,150);
-  textAlign(CENTER,CENTER);
-  text(`wow that was fast!`,width/2,height/2);
+  textAlign(CENTER,TOP);
+  text(`whoa that was fast! lucky you <3 <3 <3`,width/2,height/4);
   pop();
 }
 
@@ -126,34 +136,38 @@ function inlove() {
   push();
   textSize(69);
   fill(255,150,150);
-  textAlign(CENTER,CENTER);
-  text(`YAY <3`,width/2,height/2);
+  textAlign(CENTER,TOP);
+  text(`YAY <3`,width/2,height/4);
   pop();
 }
 
-function nolove() {
+function toolate() {
   push();
   textSize(69);
   fill(150,150,255);
-  textAlign(CENTER,CENTER);
-  text(`awe </3`,width/2,height/2);
+  textAlign(CENTER,TOP);
+  text(`aweee </3 better luck next time`,width/2,height/4);
   pop();
 }
 
+//DISPLAY
+function displayLove() {
+  //love displayed with image
+  image(love.image,love.x,love.y,200,200);
+}
 
-//CONTROLS FOR START
-function mousePressed() {
-  if (state === `title`) {
-    state = `simulation`;
-  }
+function displayYou() {
+  //user displayed with image
+  you.currentImage = you.searchingImage;
+  image(you.currentImage,you.x,you.y,200,200);
 }
 
 
-//LOVE DISPLAY/MOVEMENT
+//MOVEMENT
 function movementLove() {
   //making love randomly move around the canvas
   let change = random();
-  if (change < 0.025) { //5% chances of the time the love will move
+  if (change < 0.1) { //5% chances of the time the love will move
     love.vx = random(-love.speed,love.speed);
     love.vy = random(-love.speed,love.speed);
   }
@@ -165,14 +179,6 @@ function movementLove() {
   love.y += love.vy;
 }
 
-function displayLove() {
-  //love displayed with image
-  imageMode(CENTER);
-  image(love.image,love.x,love.y,200,200);
-}
-
-
-//YOU DISPLAY/MOVEMENT
 function movementYou() {
   handleInput()
   //constrain to convas
@@ -183,16 +189,15 @@ function movementYou() {
   you.y += you.vy;
 }
 
-function displayYou() {
-  //user displayed with image
-  you.currentImage = you.searchingImage;
-  imageMode(CENTER);
-  image(you.searchingImage,you.x,you.y,200,200);
-}
-
 
 //USER CONTROLS
+
 function handleInput() {
+  //start
+   if (keyIsDown(ENTER)) {
+    state = `simulation`;
+  }
+
   //user controls for the eyes
   if (keyIsDown(LEFT_ARROW)) {
     you.vx = -you.speed;
@@ -216,17 +221,68 @@ function handleInput() {
 }
 
 
-//GAME
-function game() {
-  //check for catching love
+//check for catching love fast
+function checkforFastinlove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2) { //finding when they overlap
-    you.gotit = true;
+  if (d < love.size / 2 + you.size / 2 && frameCount < 60*5) { //finding when they overlap and check the frame count
+    you.gotitfast = true;
+    gamestop();
   }
-  //stopping when true
-  if (you.gotit) {
-    love.speed = 0;
-    inlove(); //display state
-    you.currentImage = you.inloveImage; //change image
+}
+
+//check for catching love fast
+function checkforInlove() {
+  let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
+  if (d < love.size / 2 + you.size / 2 && frameCount < 60*10) { //caught within a certain amount of frames and check the frame count
+    you.gotit = true;
+    gamestop();
+  }
+}
+
+//check when it is too late
+function checkforToolate() {
+  if (frameCount > 60*10) { //caught within a certain amount of frames
+    you.toolate = true;
+    gamestop();
+  }
+}
+
+
+//frame count display
+function frameCounter() {
+  if (frameCount < 60*10){
+    push();
+    textSize(69);
+    fill(0);
+    textStyle(BOLD);
+    textAlign(LEFT,TOP);
+    text(`${frameCount}`,100,100);
+    pop();
+  }
+  else if (frameCount > 60*10 || state === `inlove` || state === `fastinlove` || state === `toolate`) { //!!DOESNT WORK FOR WHEN IT IS IN FINISHED STATES
+    push();
+    textSize(69);
+    fill(0);
+    textStyle(BOLD);
+    textAlign(LEFT,TOP);
+    text(`game over`,100,100);
+    pop();
+  }
+}
+
+//Stop all movement
+function gamestop() {
+  love.vx = 0;
+  love.vy = 0;
+  love.speed = 0;
+  you.vx = 0;
+  you.vy = 0;
+  you.speed = 0;
+}
+
+//reset
+function mousePressed() {
+  if (state === `inlove` || state === `fastinlove` || state === `toolate`) { //!!DOESNT WORK AND IDK WHY
+    state === `title`;
   }
 }
