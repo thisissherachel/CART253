@@ -15,9 +15,17 @@ If you catch it fast "whoa that was fast! lucky you <3"
 If you catch it "YAY <3"
 If you dont manage to catch it within the frames "awe </3 better luck next time"
 
+WHAT CHANGED SINCE LOVE, ACTUALLY ASSIGNMENT:
+- added a background
+- changed frame counter to a count down.
+- display of frame counter changes with states.
+- images now change with states
+- added more colour to the state displays
+- added sound
+
 **************************************************/
 
-let love = { //program controlled object
+let love = { //interactive element
   x: 100,
   y: 100,
   size: 100,
@@ -44,9 +52,11 @@ let you = { //user controlled object
 
 let state = `title`; // Can be: title, simulation, fastinlove, inlove, toolate
 
+let backgroundShade = (255);
+
 //PRELOAD
 // for images and asets going to be used in the running grogram
-function preload(){
+function preload() {
   love.image = loadImage('assets/images/heart.png');
   you.searchingImage = loadImage('assets/images/eyes.png');
   you.inloveImage = loadImage('assets/images/inlove.png'); //DIDNT MANAGE TO MAKE THE IMAGES CHANGE
@@ -57,59 +67,73 @@ function preload(){
 //SETUP
 //for full program running setup
 function setup() {
-  createCanvas(windowWidth,windowHeight);
+  createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+  you.currentImage = you.searchingImage;
 }
 
 //DRAW
 //for frame by frame program running
 function draw() {
-  background(255);
+  background(backgroundShade);
   handleInput();
 
-   if (state === `title`) {
-     title();
-   }
-   else if (state === `simulation`) {
-     simulation();
-     frameCounter();
-   }
 
-   //within 60*2 frames
-   if (you.gotitfast) {
-     you.currentImage = you.inloveImage; //change image //!!IMAGES DONT CHANGE AND IDK WHY
-     state === `fastinlove`
-     fastinlove(); //displays text
-   }
-   //within 60*5 frames
-   else if (you.gotit) {
-     you.currentImage = you.inloveImage; //change image
-     state === `inlove`
-     inlove(); //displays text
-   }
-   //past 60*5 frames
-   else if (you.toolate) {
-     you.currentImage = you.darnImage; //change image
-     state === `toolate`
-     nolove(); //displays text
-   }
+  if (state === `title`) {
+    title();
+  } else if (state === `simulation`) {
+    simulation();
+    frameCounter();
+  }
+
+  //within 60*2 frames
+  if (you.gotitfast) {
+    displayYou();
+    you.currentImage = you.inloveImage; //change image
+    state = `fastinlove`;
+    fastinlove(); //displays text
+    displayGameOver();
+  }
+  //within 60*5 frames
+  else if (you.gotit) {
+    displayYou();
+    you.currentImage = you.inloveImage; //change image
+    state = `inlove`;
+    inlove(); //displays text
+    displayGameOver();
+  }
+  //past 60*5 frames
+  else if (you.toolate) {
+    displayYou();
+    you.currentImage = you.darnImage; //change image
+    state = `toolate`;
+    nolove(); //displays text
+    displayGameOver();
+  }
 }
 
 //STATES
 function title() {
   push();
   textSize(69);
-  fill(200,100,100);
-  textAlign(CENTER,CENTER);
+  fill(200, 100, 100);
+  textAlign(CENTER, CENTER);
   textStyle(ITALIC);
-  text(`catch some love baby!`,width/2,height/2);
+  text(`catch some love baby!`, width / 2, height / 2);
   pop();
 
   push();
   textSize(20);
-  fill(200,100,100);
-  textAlign(CENTER,CENTER);
-  text(`Press ENTER to start :) \r\n (use arrow keys to move)`,width/2,2*height/3); //!!DONT KNOW HOW TO CENTER JUSTIFY WHILE CENTER POSITIONED
+  fill(200, 100, 100);
+  textAlign(CENTER, CENTER);
+  text(`Press ENTER to start :)\n`, width / 2, 2 * height / 3);
+  pop();
+
+  push();
+  textSize(15);
+  fill(200, 100, 100);
+  textAlign(CENTER, CENTER);
+  text(`\n\n(use arrow keys to move)`, width / 2, 2 * height / 3);
   pop();
 }
 
@@ -118,62 +142,60 @@ function simulation() {
   displayYou();
   movementLove();
   movementYou();
-  checkforFastinlove();
-  checkforInlove();
-  checkforToolate();
+  checkForFastinlove();
+  checkForInlove();
+  checkForToolate();
 }
 
 function fastinlove() {
   push();
   textSize(69);
-  fill(255,150,150);
-  textAlign(CENTER,TOP);
-  text(`whoa that was fast! lucky you <3 <3 <3`,width/2,height/4);
+  fill(255, 150, 150);
+  textAlign(CENTER, TOP);
+  text(`whoa that was fast! lucky you <3 <3 <3`, width / 2, height / 4);
   pop();
 }
 
 function inlove() {
   push();
   textSize(69);
-  fill(255,150,150);
-  textAlign(CENTER,TOP);
-  text(`YAY <3`,width/2,height/4);
+  fill(255, 150, 150);
+  textAlign(CENTER, TOP);
+  text(`YAY <3`, width / 2, height / 4);
   pop();
 }
 
 function toolate() {
   push();
   textSize(69);
-  fill(150,150,255);
-  textAlign(CENTER,TOP);
-  text(`aweee </3 better luck next time`,width/2,height/4);
+  fill(150, 150, 255);
+  textAlign(CENTER, TOP);
+  text(`aweee </3 better luck next time`, width / 2, height / 4);
   pop();
 }
 
 //DISPLAY
 function displayLove() {
   //love displayed with image
-  image(love.image,love.x,love.y,200,200);
+  image(love.image, love.x, love.y, 200, 200);
 }
 
 function displayYou() {
   //user displayed with image
-  you.currentImage = you.searchingImage;
-  image(you.currentImage,you.x,you.y,200,200);
+  image(you.currentImage, you.x, you.y, 200, 200);
 }
-
 
 //MOVEMENT
 function movementLove() {
   //making love randomly move around the canvas
   let change = random();
   if (change < 0.1) { //5% chances of the time the love will move
-    love.vx = random(-love.speed,love.speed);
-    love.vy = random(-love.speed,love.speed);
+    love.vx = random(-love.speed, love.speed);
+    love.vy = random(-love.speed, love.speed);
   }
   //constrain to convas
-  love.x = constrain(love.x,100,windowWidth-100);
-  love.y = constrain(love.y,100,windowHeight-100);
+  love.x = constrain(love.x, 100, windowWidth - 100);
+  love.y = constrain(love.y, 100, windowHeight - 100);
   //movement
   love.x += love.vx;
   love.y += love.vy;
@@ -182,8 +204,8 @@ function movementLove() {
 function movementYou() {
   handleInput()
   //constrain to convas
-  you.x = constrain(you.x,100,windowWidth-100);
-  you.y = constrain(you.y,100,windowHeight-100);
+  you.x = constrain(you.x, 100, windowWidth - 100);
+  you.y = constrain(you.y, 100, windowHeight - 100);
   //movement
   you.x += you.vx;
   you.y += you.vy;
@@ -194,54 +216,50 @@ function movementYou() {
 
 function handleInput() {
   //start
-   if (keyIsDown(ENTER)) {
+  if (keyIsDown(ENTER)) {
     state = `simulation`;
   }
 
   //user controls for the eyes
   if (keyIsDown(LEFT_ARROW)) {
     you.vx = -you.speed;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
+  } else if (keyIsDown(RIGHT_ARROW)) {
     you.vx = you.speed;
-  }
-  else { //if neither of the above are true
+  } else { //if neither of the above are true
     you.vx = 0;
   }
 
   if (keyIsDown(UP_ARROW)) {
     you.vy = -you.speed;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
+  } else if (keyIsDown(DOWN_ARROW)) {
     you.vy = you.speed;
-  }
-  else { //if neither of the above are true
+  } else { //if neither of the above are true
     you.vy = 0;
   }
 }
 
 
 //check for catching love fast
-function checkforFastinlove() {
+function checkForFastinlove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && frameCount < 60*5) { //finding when they overlap and check the frame count
+  if (d < love.size / 2 + you.size / 2 && frameCount < 60 * 5) { //finding when they overlap and check the frame count
     you.gotitfast = true;
     gamestop();
   }
 }
 
 //check for catching love fast
-function checkforInlove() {
+function checkForInlove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && frameCount < 60*10) { //caught within a certain amount of frames and check the frame count
+  if (d < love.size / 2 + you.size / 2 && frameCount < 60 * 10) { //caught within a certain amount of frames and check the frame count
     you.gotit = true;
     gamestop();
   }
 }
 
 //check when it is too late
-function checkforToolate() {
-  if (frameCount > 60*10) { //caught within a certain amount of frames
+function checkForToolate() {
+  if (frameCount > 60 * 10) { //caught within a certain amount of frames
     you.toolate = true;
     gamestop();
   }
@@ -250,24 +268,36 @@ function checkforToolate() {
 
 //frame count display
 function frameCounter() {
-  if (frameCount < 60*10){
+  if (frameCount < 60 * 10) {
     push();
     textSize(69);
     fill(0);
     textStyle(BOLD);
-    textAlign(LEFT,TOP);
-    text(`${frameCount}`,100,100);
+    textAlign(LEFT, TOP);
+    text(`${frameCount}`, 100, 100);
     pop();
+  } else {
+    displayGameOver();
   }
-  else if (frameCount > 60*10 || state === `inlove` || state === `fastinlove` || state === `toolate`) { //!!DOESNT WORK FOR WHEN IT IS IN FINISHED STATES
-    push();
-    textSize(69);
-    fill(0);
-    textStyle(BOLD);
-    textAlign(LEFT,TOP);
-    text(`game over`,100,100);
-    pop();
-  }
+  // else if (frameCount > 60*10 || state === `inlove` || state === `fastinlove` || state === `toolate`) { //!!DOESNT WORK FOR WHEN IT IS IN FINISHED STATES
+  //   push();
+  //   textSize(69);
+  //   fill(0);
+  //   textStyle(BOLD);
+  //   textAlign(LEFT,TOP);
+  //   text(`game over`,100,100);
+  //   pop();
+  // }
+}
+
+function displayGameOver() {
+  push();
+  textSize(69);
+  fill(0);
+  textStyle(BOLD);
+  textAlign(LEFT, TOP);
+  text(`game over`, 100, 100);
+  pop();
 }
 
 //Stop all movement
