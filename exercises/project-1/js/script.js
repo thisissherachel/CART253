@@ -21,7 +21,7 @@ x changed frame counter to a count down.
 x displays game over with state changes.
 x images now change with states
 x added more colour to the state displays
-- SPACE BAR to start over
+x SPACE BAR to start over
 - added sound
 
 **************************************************/
@@ -57,13 +57,17 @@ let time = 60*10; //10 seconds until game over
 
 let backgroundShade = (255);
 
+// let simulationSound;
+
 //PRELOAD
-// for images and asets going to be used in the running grogram
+// for images and assets going to be used in the running grogram
 function preload() {
   love.image = loadImage('assets/images/heart.png');
   you.searchingImage = loadImage('assets/images/eyes.png');
   you.inLoveImage = loadImage('assets/images/inLove.png');
   you.darnImage = loadImage('assets/images/darn.png');
+
+  // simulationSound = loadSound('assets/sounds/love.mp3')
 }
 
 
@@ -107,14 +111,16 @@ function draw() {
 
 //STATES
 function title() {
-  //intro display to the game
+  // //intro music
+  // simulationSound.play();
+
+  //intro display
   push();
   displayLove(); //moving objects
   displayYou(); //interactive element
   movementLove(love.speed = 10); //movement of moving object
   movementYou(you.x = 3*windowWidth/4, you.y = windowHeight/4); // movement of interactive element
   pop();
-
 
   backgroundShade = `rgba(255, 222, 254, 0.50)`;
   background(backgroundShade);
@@ -279,7 +285,7 @@ function handleInput() {
 //check for catching love fast
 function checkForFastinLove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && frameCount < time/2) { //finding when they overlap and check if time/2 has passed
+  if (d < love.size / 2 + you.size / 2 && frameCount < time/2) { //finding when they overlap and if time/2 has passed
     state = `fastInLove`;
     gameStop();
   }
