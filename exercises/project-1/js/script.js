@@ -16,13 +16,13 @@ If you catch it "YAY <3"
 If you dont manage to catch it within the frames "awe </3 better luck next time"
 
 WHAT CHANGED SINCE LOVE, ACTUALLY ASSIGNMENT:
-x added a background
-x changed frame counter to a countdown.
-x displays game over with state changes.
+x added backgrounds to states
+x added timer element rather than frame counter
+x displays game over with state changes
 x images now change with states
-x added more colour to the state displays
 x SPACE BAR to start over
-X added sound
+x added sound
+x added rest features
 
 **************************************************/
 
@@ -121,12 +121,12 @@ function title() {
   movementLove(love.speed = 10); //movement of moving object
   movementYou(you.speed = 20); // movement of interactive element
 
-  backgroundShade = `rgba(255, 222, 254, 0.50)`;
+  backgroundShade = `rgba(255, 222, 254, 0.75)`;
   background(backgroundShade);
 
   push();
   textSize(69);
-  fill(200, 100, 100);
+  fill(255, 74, 86);
   textAlign(CENTER, CENTER);
   textStyle(ITALIC);
   text(`catch some love baby!`, width / 2, height / 2);
@@ -134,24 +134,27 @@ function title() {
 
   push(); //instructions
   textSize(20);
-  fill(200, 100, 100);
+  fill(255, 74, 86);
   textAlign(CENTER, CENTER);
   text(`Press ENTER to start :)\n`, width / 2, 2 * height / 3);
   pop();
 
   push(); //controls intructions
   textSize(15);
-  fill(200, 100, 100);
+  fill(255, 74, 86);
   textAlign(CENTER, CENTER);
   text(`(use arrow keys to move)`, width / 2, (2 * height / 3)+20);
   pop();
 
   push(); //instructions to set the ambiance
   textSize(12);
-  fill(200, 100, 100);
+  fill(255, 74, 86);
   textAlign(CENTER, CENTER);
   text(`(click anywhere to set the ambiance <3)`, width / 2, (2 * height / 3)+40);
   pop();
+
+  //resets gameTimer before simulation
+  gameTimer = 0;
 }
 
 function simulation() {
@@ -165,9 +168,7 @@ function simulation() {
   displayYou(); //interactive element
   movementLove(love.speed = 30); //movement of moving object
   movementYou(you.speed = 20); // movement of interactive element
-  checkForFastinLove(); //check to se if caught within (set time/2)
-  checkForInlove(); //check to se if caught within set time
-  checkForToolate(); //check to se if caught within set time
+  checkForInlove(); //checks for interaction between you and love and reacts
 }
 
 function fastInLove() {
@@ -175,14 +176,22 @@ function fastInLove() {
   displayYou(); //freese display user image
   you.currentImage = you.inLoveImage; //change image to in love
 
-  backgroundShade = `rgba(255, 163, 171, 0.25)`; //overlay background colour
+  push(); //displat game length frozen
+  textSize(30);
+  fill(0);
+  textStyle(BOLD);
+  textAlign(LEFT, TOP);
+  text(`you have ${(gameTimer)/60} seconds left`, 100, 100);
+  pop();
+
+  backgroundShade = `rgba(255, 79, 194, 0.50)`; //overlay background colour
   background(backgroundShade);
 
   displayGameOver(); //timer stops and game is over
 
   push();
   textSize(69);
-  fill(242, 85, 182);
+  fill(255, 10, 170);
   textAlign(CENTER, TOP);
   text(`whoa that was fast! lucky you <3 <3 <3`, width/2, height/4);
   pop();
@@ -193,14 +202,22 @@ function inLove() {
   displayYou(); //freese display user image
   you.currentImage = you.inLoveImage; //change image to in love
 
+  push(); //displat game length frozen
+  textSize(30);
+  fill(0);
+  textStyle(BOLD);
+  textAlign(LEFT, TOP);
+  text(`you have ${(gameTimer)/60} seconds left`, 100, 100);
+  pop();
+
   background(backgroundShade);
-  backgroundShade = `rgba(255, 163, 171, 0.25)`; //overlay background colour
+  backgroundShade = `rgba(255, 209, 239, 0.50)`; //overlay background colour
 
   displayGameOver(); //timer stops and game is over
 
   push();
   textSize(69);
-  fill(148, 12, 96);
+  fill(255, 158, 221);
   textAlign(CENTER, TOP);
   text(`YAY <3`, width / 2, height / 4);
   pop();
@@ -211,14 +228,14 @@ function tooLate() {
   displayYou(); //freese display user image
   you.currentImage = you.darnImage; //change image to in love
 
-  backgroundShade = `rgba(100, 134, 143, 0.25)`; //overlay background colour
+  backgroundShade = `rgba(68, 149, 242, 0.50)`; //overlay background colour
   background(backgroundShade);
 
   displayGameOver(); //timer stops and game is over
 
   push();
   textSize(69);
-  fill(145, 89, 144);
+  fill(125, 185, 255);
   textAlign(CENTER, TOP);
   text(`aweee </3 better luck next time`, width / 2, height / 4);
   pop();
@@ -265,7 +282,8 @@ function movementYou() {
 //USER CONTROLS
 function handleInput() {
   //start
-  if (keyIsDown(ENTER)) {
+  if (keyIsDown(ENTER) && state === `title`) {
+    reset(); //reset values before simluation starts
     state = `simulation`;
   }
 
@@ -293,32 +311,21 @@ function handleInput() {
 }
 
 
-//check for catching love fast
-function checkForFastinLove() {
-  let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && gameTimer < gameLength/2) { //finding when they overlap and if time/2 has passed
-    state = `fastInLove`;
-    gameStop();
-  }
-}
-
-//check for catching love
+//check fro interactions etween you and love and react
 function checkForInlove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && gameTimer < gameLength) { //caught within a certain amount of frames and check the frame count
+
+  if (d < love.size / 2 + you.size / 2 && gameTimer < gameLength/2) { //caught within gameLength/2
+    state = `fastInLove`;
+    gameStop();
+  } else if (d < love.size / 2 + you.size / 2) { //caught within gameLength
     state = `inLove`;
     gameStop();
-  }
-}
-
-//check when it is too late to catch love
-function checkForToolate() {
-  if (gameTimer > gameLength) { //caught within a certain amount of frames
+  } else if (gameTimer > gameLength) { //caught within gameLength
     state = `tooLate`;
     gameStop();
   }
 }
-
 
 //timer countdown display
 function displayTimer() {
@@ -340,28 +347,33 @@ function displayGameOver() {
   textSize(30);
   fill(0);
   textStyle(BOLD);
-  textAlign(LEFT, TOP);
-  text(`GAME OVER\n`, 100, 100);
+  textAlign(CENTER, TOP);
+  text(`GAME OVER\n`, windowWidth/2, windowHeight/2);
   pop();
 
   push();
   textSize(15);
   fill(0);
   textStyle(BOLD);
-  textAlign(LEFT, TOP);
-  text(`\n\n(press the space bar to try again!)`, 100, 100);
+  textAlign(CENTER, TOP);
+  text(`\n\n(press the space bar to try again!)`, windowWidth/2, windowHeight/2);
   pop();
 }
 
-//Stop all movement
+//Stop all movement and reset gameTimer
 function gameStop() {
-  push();
-  gameTimer = 0;
   love.vx = 0;
   love.vy = 0;
   love.speed = 0;
   you.vx = 0;
   you.vy = 0;
   you.speed = 0;
-  pop();
+}
+
+//reset values to origin
+function reset() {
+  love.x = 100;
+  love.y = 100;
+  you.x = windowWidth/2;
+  you.y = windowHeight/2;
 }
