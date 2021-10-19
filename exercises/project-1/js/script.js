@@ -65,7 +65,7 @@ let simulationSound;
 function preload() {
   love.image = loadImage('assets/images/heart.png');
   you.searchingImage = loadImage('assets/images/eyes.png');
-  you.inLoveImage = loadImage('assets/images/inLove.png');
+  you.inLoveImage = loadImage('assets/images/inlove.png');
   you.darnImage = loadImage('assets/images/darn.png');
 
   simulationSound = loadSound('assets/sounds/love.mp3');
@@ -296,7 +296,7 @@ function handleInput() {
 //check for catching love fast
 function checkForFastinLove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && frameCount < gameLength/2) { //finding when they overlap and if time/2 has passed
+  if (d < love.size / 2 + you.size / 2 && gameTimer < gameLength/2) { //finding when they overlap and if time/2 has passed
     state = `fastInLove`;
     gameStop();
   }
@@ -305,7 +305,7 @@ function checkForFastinLove() {
 //check for catching love
 function checkForInlove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && frameCount < gameLength) { //caught within a certain amount of frames and check the frame count
+  if (d < love.size / 2 + you.size / 2 && gameTimer < gameLength) { //caught within a certain amount of frames and check the frame count
     state = `inLove`;
     gameStop();
   }
