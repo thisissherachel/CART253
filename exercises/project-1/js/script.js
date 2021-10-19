@@ -58,7 +58,7 @@ let gameLength = 60 * 10; // 10 seconds till game over
 
 let backgroundShade = (255);
 
-let simulationSound;
+let music;
 
 //PRELOAD
 // for images and assets going to be used in the running grogram
