@@ -22,7 +22,7 @@ x displays game over with state changes and show end time
 x images now change with states
 x SPACE BAR to start over
 x added sound
-x added rest features
+x added reset features
 
 **************************************************/
 
