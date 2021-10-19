@@ -18,7 +18,7 @@ If you dont manage to catch it within the frames "awe </3 better luck next time"
 WHAT CHANGED SINCE LOVE, ACTUALLY ASSIGNMENT:
 x added backgrounds to states
 x added timer element rather than frame counter
-x displays game over with state changes
+x displays game over with state changes and show end time
 x images now change with states
 x SPACE BAR to start over
 x added sound
