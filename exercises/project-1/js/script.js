@@ -17,12 +17,12 @@ If you dont manage to catch it within the frames "awe </3 better luck next time"
 
 WHAT CHANGED SINCE LOVE, ACTUALLY ASSIGNMENT:
 x added a background
-x changed frame counter to a count down.
+x changed frame counter to a countdown.
 x displays game over with state changes.
 x images now change with states
 x added more colour to the state displays
 x SPACE BAR to start over
-- added sound
+X added sound
 
 **************************************************/
 
@@ -36,8 +36,8 @@ let love = { //interactive element
 };
 
 let you = { //user controlled object
-  x: 500,
-  y: 500,
+  x: 800,
+  y: 200,
   size: 100,
   vx: 0,
   vy: 0,
@@ -53,11 +53,12 @@ let you = { //user controlled object
 
 let state = `title`; // Can be: title, simulation, fastInLove, inLove, tooLate
 
-let time = 60*10; //10 seconds until game over
+let gameTimer = 0; //timer counting the frames during the game
+let gameLength = 60 * 10; // 10 seconds till game over
 
 let backgroundShade = (255);
 
-// let simulationSound;
+let simulationSound;
 
 //PRELOAD
 // for images and assets going to be used in the running grogram
@@ -67,7 +68,7 @@ function preload() {
   you.inLoveImage = loadImage('assets/images/inLove.png');
   you.darnImage = loadImage('assets/images/darn.png');
 
-  // simulationSound = loadSound('assets/sounds/love.mp3')
+  simulationSound = loadSound('assets/sounds/love.mp3');
 }
 
 
@@ -77,6 +78,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
   you.currentImage = you.searchingImage; //base image for user
+
+//ambiance music on loop
+  simulationSound.loop();
 }
 
 //DRAW
@@ -111,16 +115,11 @@ function draw() {
 
 //STATES
 function title() {
-  // //intro music
-  // simulationSound.play();
-
   //intro display
-  push();
   displayLove(); //moving objects
   displayYou(); //interactive element
   movementLove(love.speed = 10); //movement of moving object
-  movementYou(you.x = 3*windowWidth/4, you.y = windowHeight/4); // movement of interactive element
-  pop();
+  movementYou(you.speed = 20); // movement of interactive element
 
   backgroundShade = `rgba(255, 222, 254, 0.50)`;
   background(backgroundShade);
@@ -144,16 +143,28 @@ function title() {
   textSize(15);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
-  text(`\n\n(use arrow keys to move)`, width / 2, 2 * height / 3);
+  text(`(use arrow keys to move)`, width / 2, (2 * height / 3)+20);
+  pop();
+
+  push(); //instructions to set the ambiance
+  textSize(12);
+  fill(200, 100, 100);
+  textAlign(CENTER, CENTER);
+  text(`(click anywhere to set the ambiance <3)`, width / 2, (2 * height / 3)+40);
   pop();
 }
 
 function simulation() {
+  gameTimer++; //start timer
+  if (gameTimer > gameLength) { //checks for when the timer has reached the end
+    state = `tooLate`; //will display gave over and stop timer
+  }
+
+  displayTimer();
   displayLove(); //moving objects
   displayYou(); //interactive element
   movementLove(love.speed = 30); //movement of moving object
-  movementYou(); // movement of interactive element
-  frameCounter();
+  movementYou(you.speed = 20); // movement of interactive element
   checkForFastinLove(); //check to se if caught within (set time/2)
   checkForInlove(); //check to se if caught within set time
   checkForToolate(); //check to se if caught within set time
@@ -167,7 +178,7 @@ function fastInLove() {
   backgroundShade = `rgba(255, 163, 171, 0.25)`; //overlay background colour
   background(backgroundShade);
 
-  displayGameOver(); //stop frame count
+  displayGameOver(); //timer stops and game is over
 
   push();
   textSize(69);
@@ -185,7 +196,7 @@ function inLove() {
   background(backgroundShade);
   backgroundShade = `rgba(255, 163, 171, 0.25)`; //overlay background colour
 
-  displayGameOver(); //stop frame count
+  displayGameOver(); //timer stops and game is over
 
   push();
   textSize(69);
@@ -203,7 +214,7 @@ function tooLate() {
   backgroundShade = `rgba(100, 134, 143, 0.25)`; //overlay background colour
   background(backgroundShade);
 
-  displayGameOver(); //stop frame count
+  displayGameOver(); //timer stops and game is over
 
   push();
   textSize(69);
@@ -241,7 +252,7 @@ function movementLove() {
 }
 
 function movementYou() {
-  handleInput()
+  handleInput();
   //constrain to convas
   you.x = constrain(you.x, 100, windowWidth - 100);
   you.y = constrain(you.y, 100, windowHeight - 100);
@@ -285,7 +296,7 @@ function handleInput() {
 //check for catching love fast
 function checkForFastinLove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && frameCount < time/2) { //finding when they overlap and if time/2 has passed
+  if (d < love.size / 2 + you.size / 2 && frameCount < gameLength/2) { //finding when they overlap and if time/2 has passed
     state = `fastInLove`;
     gameStop();
   }
@@ -294,7 +305,7 @@ function checkForFastinLove() {
 //check for catching love
 function checkForInlove() {
   let d = dist(you.x, you.y, love.x, love.y); //finding the distance between user and love
-  if (d < love.size / 2 + you.size / 2 && frameCount < time) { //caught within a certain amount of frames and check the frame count
+  if (d < love.size / 2 + you.size / 2 && frameCount < gameLength) { //caught within a certain amount of frames and check the frame count
     state = `inLove`;
     gameStop();
   }
@@ -302,22 +313,22 @@ function checkForInlove() {
 
 //check when it is too late to catch love
 function checkForToolate() {
-  if (frameCount > time) { //caught within a certain amount of frames
+  if (gameTimer > gameLength) { //caught within a certain amount of frames
     state = `tooLate`;
     gameStop();
   }
 }
 
 
-//frame count down display
-function frameCounter() {
-  if (frameCount < time) {
+//timer countdown display
+function displayTimer() {
+  if (gameTimer < gameLength) {
     push();
     textSize(30);
     fill(0);
     textStyle(BOLD);
     textAlign(LEFT, TOP);
-    text(`you have ${(time-frameCount)/60} seconds left`, 100, 100);
+    text(`you have ${(gameTimer)/60} seconds left`, 100, 100);
     pop();
   } else {
     displayGameOver();
@@ -344,10 +355,13 @@ function displayGameOver() {
 
 //Stop all movement
 function gameStop() {
+  push();
+  gameTimer = 0;
   love.vx = 0;
   love.vy = 0;
   love.speed = 0;
   you.vx = 0;
   you.vy = 0;
   you.speed = 0;
+  pop();
 }
