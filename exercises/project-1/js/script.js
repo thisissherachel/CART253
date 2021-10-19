@@ -120,6 +120,7 @@ function tryMusic() {
   if (!music.isPlaying()) {
     music.loop();
   }
+}
 
 //STATES
 function title() {
