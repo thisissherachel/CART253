@@ -68,7 +68,7 @@ function preload() {
   you.inLoveImage = loadImage('assets/images/inlove.png');
   you.darnImage = loadImage('assets/images/darn.png');
 
-  simulationSound = loadSound('assets/sounds/love.mp3');
+  music = loadSound('assets/sounds/love.mp3');
 }
 
 
@@ -78,9 +78,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
   you.currentImage = you.searchingImage; //base image for user
-
-//ambiance music on loop
-  simulationSound.loop();
 }
 
 //DRAW
@@ -112,6 +109,17 @@ function draw() {
     tooLate();
   }
 }
+
+//SOUNDS
+function mousePressed() {
+  tryMusic();
+}
+
+function tryMusic() {
+  // Play music if this is the first interaction
+  if (!music.isPlaying()) {
+    music.loop();
+  }
 
 //STATES
 function title() {
