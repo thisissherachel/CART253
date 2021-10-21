@@ -105,79 +105,231 @@ Rachel B. Richard
 // }
 
 
-//7.2 Introducing arrays
-//storing multiple variables in one variable (creates variables starting from index 0 and counts up)
-//.push continues to add to the index eveytime its called.
+// //7.2 Introducing arrays
+// //storing multiple variables in one variable (creates variables starting from index 0 and counts up)
+// //.push continues to add to the index eveytime its called.
+//
+// //!!array variable
+// let school = [];
+// let schoolSize = 10;
+//
+// function setup() {
+//   createCanvas(600, 600);
+//
+//   for (let i = 0; i < schoolSize; i++) { //!!creating a for loop for the index of the array
+//     // school[i] = createFish(random(0, width), random(0, height)); // Create fish, positioned randomly
+//     let fish = createFish(random(0, width), random(0, height)); //OR use .push function to just add one everytime
+//     school.push(fish);
+//   }
+// }
+//
+// // createFish(x,y)
+// // Creates a new JavaScript Object describing a fish and returns it
+// function createFish(x, y) {
+//   let fish = {
+//     x: x,
+//     y: y,
+//     size: 50,
+//     vx: 0,
+//     vy: 0,
+//     speed: 2
+//   };
+//   return fish;
+// }
+//
+// // draw()
+// // Moves and displays our fish
+// function draw() {
+//   background(0);
+//
+//   for (let i = 0; i < school.length; i++) { //!!creating a for loop for the index of the array that continues till array is done
+//     moveFish(school[i]);
+//     displayFish(school[i]);
+//   }
+// }
+//
+// // moveFish(fish)
+// // Chooses whether the provided fish changes direction and moves it
+// function moveFish(fish) {
+//   // Choose whether to change direction
+//   let change = random(0, 1);
+//   if (change < 0.05) {
+//     fish.vx = random(-fish.speed, fish.speed);
+//     fish.vy = random(-fish.speed, fish.speed);
+//   }
+//
+//   // Move the fish
+//   fish.x = fish.x + fish.vx;
+//   fish.y = fish.y + fish.vy;
+//
+//   // Constrain the fish to the canvas
+//   fish.x = constrain(fish.x, 0, width);
+//   fish.y = constrain(fish.y, 0, height);
+// }
+//
+// // displayFish(fish)
+// // Displays the provided fish on the canvas
+// function displayFish(fish) {
+//   push();
+//   fill(200, 100, 100);
+//   noStroke();
+//   ellipse(fish.x, fish.y, fish.size);
+//   pop();
+// }
+//
+// function mousePressed() { //!! creates fish when mouse is clicked
+//   let fish = createFish(mouseX,mouseY);
+//   school.push(fish); //!! increases index at the end of the existing array
+// }
 
-//!!array variable
-let school = [];
-let schoolSize = 10;
 
+//7.3 more arrays
+
+// // ARRAYS IN RANDOM
+// //using array with pre-determined indexes where they are randomly taken
+//
+// // Our array of fortunes, each of which is a string
+// // Note that we still use square brackets around the array,
+// // but now we list the elements the array should start with
+// // separated by commas.
+// // As here, we can put each element on a separate line for clarity.
+// let fortunes = [
+//   `It's not looking great.`,
+//   `You will trip over an apple today.`,
+//   `Beware of over-friendly cats.`,
+//   `Bank error in your favor, collect $200.`,
+//   `Start your Korean skincare regime.`,
+//   `You will feel better than 20 years ago.`,
+//   `David Lynch will call you on your birthday.`,
+//   `Happiness is just around the corner.`,
+//   `You will make it look easy today.`,
+//   `Your future is cloudy.`
+// ];
+//
+// // We need a variable to store the chosen fortune so we can
+// // display it in draw()
+// let chosenFortune = `I am looking into your soul...`;
+//
+// // setup() gets basic styling ready
+// function setup() {
+//   createCanvas(600, 600);
+//   textAlign(CENTER, CENTER);
+//   textSize(32);
+//   fill(255);
+// }
+//
+// // draw() displays the current fortune
+// function draw() {
+//   background(0);
+//   text(chosenFortune, width / 2, height / 2);
+// }
+//
+// // mousePressed() chooses a random fortune from the fortunes array
+// function mousePressed() {
+//   // By passing the fortunes array as an argument to random() we get back
+//   // a RANDOM ELEMENT in the array (one of the fortune strings) which we
+//   // can then store in the chosenFortune variable for displaying
+//   chosenFortune = random(fortunes);
+// }
+
+
+// // ARRAYS IN ORDER
+// //using array with pre-determined indexes where they are taken in order and stop.
+//
+// // Our array of lines from one of Hamlet's soliloquys (a sequence
+// // where he essentially talks to himself). We will want to display
+// // each line one after the other as the user clicks.
+// let soliloquy = [
+//   `To be, or not to be`,
+//   `That is the question.`,
+//   `Whether 'tis nobler in the mind`,
+//   `To suffer the slings and arrows`,
+//   `Of outrageous fortune`,
+//   `Or to take arms`,
+//   `Against a sea of sorrows`,
+//   `And by opposing end them.`
+// ];
+//
+// // We need a variable to store the current line we want to display
+// // It should start at ZERO because that's the first index in the array
+// let currentLine = 0;
+//
+// // setup() gets basic styling ready
+// function setup() {
+//   createCanvas(600, 600);
+//   textAlign(CENTER, CENTER);
+//   textSize(32);
+//   fill(255);
+// }
+//
+// // draw() displays the current line
+// function draw() {
+//   background(0);
+//   // Get the element in the array at the CURRENT index (starts at 0 and goes up)
+//   let dialog = soliloquy[currentLine];
+//   // Display the string in that element on the canvas
+//   text(dialog, width / 2, height / 2);
+// }
+//
+// // mousePressed() moves to the next line in the soliloquy unless we've reached the end
+// function mousePressed() {
+//   // Go to the next line in the soliloquy
+//   currentLine = currentLine + 1;
+//   // Check if we've reached the LENGTH of the array
+//   // If we have, we've gone past the end because we started counting at 0
+//   // The LENGTH of our array is 8, but the final element is at index 7
+//   if (currentLine === soliloquy.length) {
+//     // If we've gone past the end, go back one to the last real element
+//     currentLine = soliloquy.length - 1;
+//   }
+// }
+
+
+//TRAILS
+//using array to store information during program (allows you to have a trail while keeping a background and manipulate index)
+
+let circle = {
+  x: 0,
+  y: 0,
+  size: 100,
+  trail: [], // Note that we are creating an EMPTY TRAIL ARRAY as a PROPERTY of the circle
+  trailSize: 20 //max of arrray
+}
+
+// setup() the canvas ready
 function setup() {
   createCanvas(600, 600);
-
-  for (let i = 0; i < schoolSize; i++) { //!!creating a for loop for the index of the array
-    // school[i] = createFish(random(0, width), random(0, height)); // Create fish, positioned randomly
-    let fish = createFish(random(0, width), random(0, height)); //OR use .push function to just add one everytime
-    school.push(fish);
-  }
 }
 
-// createFish(x,y)
-// Creates a new JavaScript Object describing a fish and returns it
-function createFish(x, y) {
-  let fish = {
-    x: x,
-    y: y,
-    size: 50,
-    vx: 0,
-    vy: 0,
-    speed: 2
-  };
-  return fish;
-}
-
-// draw()
-// Moves and displays our fish
+// draw() draws a circle with a trails
 function draw() {
   background(0);
 
-  for (let i = 0; i < school.length; i++) { //!!creating a for loop for the index of the array that continues till array is done
-    moveFish(school[i]);
-    displayFish(school[i]);
-  }
-}
-
-// moveFish(fish)
-// Chooses whether the provided fish changes direction and moves it
-function moveFish(fish) {
-  // Choose whether to change direction
-  let change = random(0, 1);
-  if (change < 0.05) {
-    fish.vx = random(-fish.speed, fish.speed);
-    fish.vy = random(-fish.speed, fish.speed);
+  // Use a for loop to go through each element in the circle's trail array in order
+  for (let i = 0; i < circle.trail.length; i++) {
+    // Get the element at the index indicated by i (0, then 1, then 2, etc.)
+    let element = circle.trail[i];
+    // Draw an ellipse the same size as the circle at that position
+    ellipse(element.x, element.y, circle.size);
   }
 
-  // Move the fish
-  fish.x = fish.x + fish.vx;
-  fish.y = fish.y + fish.vy;
+  // Move the circle to the mouse position
+  circle.x = mouseX;
+  circle.y = mouseY;
 
-  // Constrain the fish to the canvas
-  fish.x = constrain(fish.x, 0, width);
-  fish.y = constrain(fish.y, 0, height);
-}
+  // Draw the circle
+  ellipse(circle.x, circle.y, circle.size);
 
-// displayFish(fish)
-// Displays the provided fish on the canvas
-function displayFish(fish) {
-  push();
-  fill(200, 100, 100);
-  noStroke();
-  ellipse(fish.x, fish.y, fish.size);
-  pop();
-}
+  // Create a new position object that stores where the circle is now
+  // which we can add to the trail to trace the path of the circle
+  let newTrailPosition = {
+    x: circle.x,
+    y: circle.y
+  };
+  // Add the position to the circle's trail array
+  circle.trail.push(newTrailPosition);
 
-function mousePressed() { //!! creates fish when mouse is clicked
-  let fish = createFish(mouseX,mouseY);
-  school.push(fish); //!! increases index at the end of the existing array
+  if (circle.trail.length > circle.trailSize) {
+    circle.trail.shift(); //!!removes first index and shift back to 0
+  }
 }
