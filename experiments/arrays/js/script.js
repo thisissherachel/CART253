@@ -105,12 +105,79 @@ Rachel B. Richard
 // }
 
 
-function setup() {
+//7.2 Introducing arrays
+//storing multiple variables in one variable (creates variables starting from index 0 and counts up)
+//.push continues to add to the index eveytime its called.
 
+//!!array variable
+let school = [];
+let schoolSize = 10;
+
+function setup() {
+  createCanvas(600, 600);
+
+  for (let i = 0; i < schoolSize; i++) { //!!creating a for loop for the index of the array
+    // school[i] = createFish(random(0, width), random(0, height)); // Create fish, positioned randomly
+    let fish = createFish(random(0, width), random(0, height)); //OR use .push function to just add one everytime
+    school.push(fish);
+  }
+}
+
+// createFish(x,y)
+// Creates a new JavaScript Object describing a fish and returns it
+function createFish(x, y) {
+  let fish = {
+    x: x,
+    y: y,
+    size: 50,
+    vx: 0,
+    vy: 0,
+    speed: 2
+  };
+  return fish;
 }
 
 // draw()
-//for frame by frame program running
+// Moves and displays our fish
 function draw() {
+  background(0);
 
+  for (let i = 0; i < school.length; i++) { //!!creating a for loop for the index of the array that continues till array is done
+    moveFish(school[i]);
+    displayFish(school[i]);
+  }
+}
+
+// moveFish(fish)
+// Chooses whether the provided fish changes direction and moves it
+function moveFish(fish) {
+  // Choose whether to change direction
+  let change = random(0, 1);
+  if (change < 0.05) {
+    fish.vx = random(-fish.speed, fish.speed);
+    fish.vy = random(-fish.speed, fish.speed);
+  }
+
+  // Move the fish
+  fish.x = fish.x + fish.vx;
+  fish.y = fish.y + fish.vy;
+
+  // Constrain the fish to the canvas
+  fish.x = constrain(fish.x, 0, width);
+  fish.y = constrain(fish.y, 0, height);
+}
+
+// displayFish(fish)
+// Displays the provided fish on the canvas
+function displayFish(fish) {
+  push();
+  fill(200, 100, 100);
+  noStroke();
+  ellipse(fish.x, fish.y, fish.size);
+  pop();
+}
+
+function mousePressed() { //!! creates fish when mouse is clicked
+  let fish = createFish(mouseX,mouseY);
+  school.push(fish); //!! increases index at the end of the existing array
 }
