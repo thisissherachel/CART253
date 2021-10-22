@@ -60,18 +60,11 @@ function preload(){
 function setup() {
   createCanvas(windowWidth,windowHeight);
   imageMode(CENTER);
-=======
-// setup()
-//for full program running setup
-function setup() {
-
->>>>>>> parent of 2161819 (E5: base foundation of activity 5)
 }
 
 //DRAW
 //for frame by frame program running
 function draw() {
-<<<<<<< HEAD
   background(255);
   handleInput();
 
