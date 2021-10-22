@@ -17,6 +17,7 @@ If you dont manage to catch it within the frames "awe </3 better luck next time"
 
 **************************************************/
 
+<<<<<<< HEAD
 let love = { //program controlled object
   x: 100,
   y: 100,
@@ -59,11 +60,18 @@ function preload(){
 function setup() {
   createCanvas(windowWidth,windowHeight);
   imageMode(CENTER);
+=======
+// setup()
+//for full program running setup
+function setup() {
+
+>>>>>>> parent of 2161819 (E5: base foundation of activity 5)
 }
 
 //DRAW
 //for frame by frame program running
 function draw() {
+<<<<<<< HEAD
   background(255);
   handleInput();
 
@@ -285,4 +293,7 @@ function mousePressed() {
   if (state === `inlove` || state === `fastinlove` || state === `toolate`) { //!!DOESNT WORK AND IDK WHY
     state === `title`;
   }
+=======
+
+>>>>>>> parent of 2161819 (E5: base foundation of activity 5)
 }
