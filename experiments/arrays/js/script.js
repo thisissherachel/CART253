@@ -84,7 +84,7 @@ Rachel B. Richard
 //     }
 //   }
 // }
-//
+// //
 // // Draw the user as a circle
 // function displayUser() {
 //   push();
@@ -285,51 +285,306 @@ Rachel B. Richard
 // }
 
 
-//TRAILS
-//using array to store information during program (allows you to have a trail while keeping a background and manipulate index)
+// //TRAILS
+// //using array to store information during program (allows you to have a trail while keeping a background and manipulate index)
+//
+// let circle = {
+//   x: 0,
+//   y: 0,
+//   size: 100,
+//   trail: [], // Note that we are creating an EMPTY TRAIL ARRAY as a PROPERTY of the circle
+//   trailSize: 20 //max of arrray
+// }
+//
+// // setup() the canvas ready
+// function setup() {
+//   createCanvas(600, 600);
+// }
+//
+// // draw() draws a circle with a trails
+// function draw() {
+//   background(0);
+//
+//   // Use a for loop to go through each element in the circle's trail array in order
+//   for (let i = 0; i < circle.trail.length; i++) {
+//     // Get the element at the index indicated by i (0, then 1, then 2, etc.)
+//     let element = circle.trail[i];
+//     // Draw an ellipse the same size as the circle at that position
+//     ellipse(element.x, element.y, circle.size);
+//   }
+//
+//   // Move the circle to the mouse position
+//   circle.x = mouseX;
+//   circle.y = mouseY;
+//
+//   // Draw the circle
+//   ellipse(circle.x, circle.y, circle.size);
+//
+//   // Create a new position object that stores where the circle is now
+//   // which we can add to the trail to trace the path of the circle
+//   let newTrailPosition = {
+//     x: circle.x,
+//     y: circle.y
+//   };
+//   // Add the position to the circle's trail array
+//   circle.trail.push(newTrailPosition);
+//
+//   if (circle.trail.length > circle.trailSize) {
+//     circle.trail.shift(); //!!removes first index and shift back to 0
+//   }
+// }
 
-let circle = {
+
+
+
+
+
+
+
+
+//TEST
+// let user = { //user controlled object
+//   x: 500,
+//   y: 500,
+//   size: 50,
+//   vx: 0,
+//   vy: 0,
+//   ax: 0,
+//   ay: 0,
+//   acceleration: 1,
+//   speed: 20,
+//   maxSpeed: 20,
+//   currentImage: undefined,
+//   sadImage: undefined,
+//   joyImage: undefined,
+//   darnImage: undefined,
+// }
+//
+// let joy = {
+//   image: undefined,
+//   caught: false,
+// }
+//
+// let happiness = [];
+// let joyNum = 20;
+//
+// //PRELOAD
+// // for images and assets going to be used in the running grogram
+// function preload() {
+//   joy.image = loadImage('assets/images/joy.png');
+//   user.sadImage = loadImage('assets/images/sad.png');
+//   user.joyImage = loadImage('assets/images/joy.png');
+//   user.darnImage = loadImage('assets/images/cry.png');
+//
+//   // music = loadSound('assets/sounds/happysong.mp3');
+// }
+//
+// function setup() {
+//   createCanvas(windowWidth, windowHeight);
+//
+//   for (let i = 0; i < joyNum; i++) { //!!creating a for loop for the index of the array
+//     happiness[i] = createJoy(random(0, width), random(0, height)); // Create joy, positioned randomly
+//     let joy = createJoy(random(0, width), random(0, height)); //OR use .push function to just add one everytime
+//   }
+// }
+//
+// // createJoy(x,y)
+// // Creates a new JavaScript Object describing a fish and returns it
+// function createJoy(x, y) {
+//   let joy = {
+//     x: x,
+//     y: y,
+//     size: 50,
+//     vx: 0,
+//     vy: 0,
+//     speed: 10,
+//     image: undefined,
+//     caught: false,
+//   };
+//   return joy;
+// }
+//
+// // draw()
+// // Moves and displays our joy
+// function draw() {
+//   background(0);
+//
+//   movementUser();
+//   displayUser();
+//
+//
+//   for (let i = 0; i < happiness.length; i++) { //!!creating a for loop for the index of the array that continues till array is done
+//     movementJoy(happiness[i]);
+//     displayJoy(happiness[i]);
+//   }
+// }
+//
+// // movementJoy(joy)
+// // Chooses whether the provided joy changes direction and moves it
+// function movementJoy(joy) {
+//   // Choose whether to change direction
+//   let change = random(0, 1);
+//   if (change < 0.05) {
+//     joy.vx = random(-joy.speed, joy.speed);
+//     joy.vy = random(-joy.speed, joy.speed);
+//   }
+//
+//   // Move the fish
+//   joy.x += joy.vx;
+//   joy.y += joy.vy;
+//   // Constrain the fish to the canvas
+//   joy.x = constrain(joy.x, 0, width);
+//   joy.y = constrain(joy.y, 0, height);
+// }
+//
+// function movementUser() {
+//   //user controls for user
+//   if (mouseX < user.x) {   //accelerating towards mouse as user move
+//     user.ax = -user.acceleration;
+//   }
+//   else {
+//     user.ax = user.acceleration;
+//   }
+//
+//   if (mouseY < user.y) {
+//     user.ay = -user.acceleration;
+//   }
+//   else {
+//     user.ay = user.acceleration;
+//   }
+//
+//   user.vx = user.vx + user.ax; //updates users position with acceleration
+//   user.vx = constrain(user.vx,-user.maxSpeed,user.maxSpeed); //limits the acceleration
+//   user.vy = user.vy + user.ay;
+//   user.vy = constrain(user.vy,-user.maxSpeed,user.maxSpeed);
+//
+//   //constrain to convas
+//   user.x = constrain(user.x, 100, windowWidth - 100);
+//   user.y = constrain(user.y, 100, windowHeight - 100);
+//
+//   //movement
+//   user.x += user.vx;
+//   user.y += user.vy;
+// }
+//
+// // displayJoy(joy)
+// // Displays the provided fish on the canvas
+// function displayJoy(joy) {
+//   // imageMode(CENTER);
+//   // image(joy.image, joy.x, joy.y, 100, 100);
+//   if (!joy.caught === true) {
+//     // image(joy.image, joy.x, joy.y, 200, 200);
+//     push();
+//     fill(200, 100, 100);
+//     noStroke();
+//     ellipse(joy.x, joy.y, joy.size);
+//     pop();
+//   }
+// }
+//
+// function checkForJoyCaught(joy) {
+//   // We only want to check for an overlap if food hasn't been eaten yet
+//   if (!joy.caught) {
+//     let d = dist(user.x, user.y, joy.x, joy.y);
+//     if (d < user.size / 2 + joy.size / 2) {
+//       joy.caught = true;
+//     }
+//   }
+// }
+//
+// // Draw the user as a circle
+// function displayUser() {
+//   push();
+//   fill(255);
+//   ellipse(user.x, user.y, user.size);
+//   pop();
+// }
+
+
+let user = {
   x: 0,
   y: 0,
-  size: 100,
-  trail: [], // Note that we are creating an EMPTY TRAIL ARRAY as a PROPERTY of the circle
-  trailSize: 20 //max of arrray
-}
+  size: 50
+};
 
-// setup() the canvas ready
+//!! foods variables (setting the variables)
+let happiness = [];
+let joyNum = 20;
+
+let joy = {
+  x: x,
+  y: y,
+  size: 50,
+  caught: false,
+};
+
+
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(windowWidth, windowHeight);
+
+  for (let i = 0; i < joyNum; i++) { //!!creating a for loop for the index of the array
+    happiness[i] = createJoy(random(0, width), random(0, height)); // Create joy, positioned randomly
+  }
+
+  // createJoy(x,y)
+  // Creates a new JavaScript Object describing a fish and returns it
+  function createJoy(x,y) {
+    let joy = {
+      x: x,
+      y: y,
+      size: 50,
+      caught: false,
+    };
+    return joy;
+  }
 }
 
-// draw() draws a circle with a trails
 function draw() {
   background(0);
 
-  // Use a for loop to go through each element in the circle's trail array in order
-  for (let i = 0; i < circle.trail.length; i++) {
-    // Get the element at the index indicated by i (0, then 1, then 2, etc.)
-    let element = circle.trail[i];
-    // Draw an ellipse the same size as the circle at that position
-    ellipse(element.x, element.y, circle.size);
+  // Move the user (with the mouse)
+  moveUser();
+
+  //Check whether the user has eaten either food !!using variables
+  checkForJoyCaught(joy);
+
+  //Display the user and foods !!using variables
+  displayUser();
+  displayJoy(joy);
+}
+
+// Sets the user position to the mouse position
+function moveUser() {
+  user.x = mouseX;
+  user.y = mouseY;
+}
+
+// Checks if the user overlaps the food object and eats it if so !!using returned variable
+function checkForJoyCaught(joy) {
+  // We only want to check for an overlap if food hasn't been eaten yet
+  if (!joy.caught) {
+    let d = dist(user.x, user.y, joy.x, joy.y);
+    if (d < user.size / 2 + joy.size / 2) {
+      joy.caught = true;
+    }
   }
+}
 
-  // Move the circle to the mouse position
-  circle.x = mouseX;
-  circle.y = mouseY;
+// Draw the user as a circle
+function displayUser() {
+  push();
+  fill(255);
+  ellipse(user.x, user.y, user.size);
+  pop();
+}
 
-  // Draw the circle
-  ellipse(circle.x, circle.y, circle.size);
-
-  // Create a new position object that stores where the circle is now
-  // which we can add to the trail to trace the path of the circle
-  let newTrailPosition = {
-    x: circle.x,
-    y: circle.y
-  };
-  // Add the position to the circle's trail array
-  circle.trail.push(newTrailPosition);
-
-  if (circle.trail.length > circle.trailSize) {
-    circle.trail.shift(); //!!removes first index and shift back to 0
+// Draw food as a circle !!using returned variable
+function displayJoy(joy) {
+  // We don't want to display food if it's been eaten
+  if (!joy.caught) {
+    push();
+    fill(255, 100, 100);
+    ellipse(joy.x, joy.y, joy.size);
+    pop();
   }
 }
