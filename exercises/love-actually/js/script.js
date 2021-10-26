@@ -17,7 +17,6 @@ If you dont manage to catch it within the frames "awe </3 better luck next time"
 
 **************************************************/
 
-<<<<<<< HEAD
 let love = { //program controlled object
   x: 100,
   y: 100,
