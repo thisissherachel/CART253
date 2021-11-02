@@ -39,7 +39,6 @@
 
 
 //9.2 Overriding methods
-
 class Car extends Vehicle {
   // Create a new Car object that moves to the right
   constructor(x, y) {
