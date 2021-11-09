@@ -36,38 +36,92 @@ Rachel B. Richard
 //   barkSFX.loop();
 // }
 
-//10.2 Oscillators
-//creating music with a computer
+// //10.2 Oscillators
+// //creating music with a computer
+//
+// let siren; // To store our oscillator
+// let angle = 0; // The angle we'll use to oscillate the siren
+// let angleIncrease = 0.1; // How much to increase the angle each frame
+//
+// function setup() {
+//   createCanvas(600, 600);
+//   userStartAudio();
+//
+//   // Create a new oscillator
+//   siren = new p5.Oscillator(0, `sine`);
+//   // Set its amplitude down a bit or this could hurt
+//   siren.amp(0.25);
+// }
+//
+// function draw() {
+//   background(0);
+//
+//   // Increase the angle
+//   angle += angleIncrease;
+//   // Calculate the result of the sine of the current angle
+//   let sinAngle = sin(angle);
+//   // Map the result (between -1 and 1) to a frequency range
+//   let newFreq = map(sinAngle, -1, 1, 440, 880);
+//
+//   // Set the frequency of the oscillator based on the sin calculation
+//   siren.freq(newFreq);
+// }
+//
+// // mousePressed() starts our siren
+// function mousePressed() {
+//   siren.start();
+// }
 
-let siren; // To store our oscillator
-let angle = 0; // The angle we'll use to oscillate the siren
-let angleIncrease = 0.1; // How much to increase the angle each frame
+//10.3 PolySynth
+//creating a synthesizer
+
+// Our synthesizer
+let synth;
+// musical notes ("b" means "flat" if you haven't seen it before)
+let notes = [`F2`, `G2`, `Ab3`, `Bb3`, `C4`, `Db4`, `Eb4`, `F5`];
+// The current note to play, start at the beginning
+let currentNote = 0;
+// To track the interval that plays note
+let interval;
 
 function setup() {
   createCanvas(600, 600);
   userStartAudio();
 
-  // Create a new oscillator
-  siren = new p5.Oscillator(0, `sine`);
-  // Set its amplitude down a bit or this could hurt
-  siren.amp(0.25);
+  // Create the synthesizer
+  synth = new p5.PolySynth();
 }
 
 function draw() {
   background(0);
-
-  // Increase the angle
-  angle += angleIncrease;
-  // Calculate the result of the sine of the current angle
-  let sinAngle = sin(angle);
-  // Map the result (between -1 and 1) to a frequency range
-  let newFreq = map(sinAngle, -1, 1, 440, 880);
-
-  // Set the frequency of the oscillator based on the sin calculation
-  siren.freq(newFreq);
 }
 
-// mousePressed() starts our siren
+// mousePressed() starts and stops our piano playing
 function mousePressed() {
-  siren.start();
+  // First check that the piano isn't already playing
+  // The interval will be undefined if it hasn't started
+  if (interval === undefined) {
+    // Start our interval, calling playNextNote every 500 milliseconds
+    // Assign the result to interval to remember the interval
+    interval = setInterval(playNextNote, 500);
+  }
+  else {
+    // If they click when it's playing, clear the interval and set interval
+    // back to undefined to stop play
+    clearInterval(interval);
+    interval = undefined;
+  }
+}
+
+// playNextNote() plays the next note in our array
+function playNextNote() {
+  // Chose the note at the current position
+  let note = notes[currentNote];
+  // Play it
+  synth.play(note, 0.2, 0, 0.4);
+  // Increase the current position and go back to 0 when we reach the end
+  currentNote = currentNote + 1;
+  if (currentNote === notes.length) {
+    currentNote = 0;
+  }
 }
