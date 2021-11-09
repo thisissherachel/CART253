@@ -285,7 +285,4 @@ function mousePressed() {
   if (state === `inlove` || state === `fastinlove` || state === `toolate`) { //!!DOESNT WORK AND IDK WHY
     state === `title`;
   }
-=======
-
->>>>>>> parent of 2161819 (E5: base foundation of activity 5)
 }
