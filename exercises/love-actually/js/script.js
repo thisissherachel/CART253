@@ -78,19 +78,19 @@ function draw() {
    //within 60*2 frames
    if (you.gotitfast) {
      you.currentImage = you.inloveImage; //change image //!!IMAGES DONT CHANGE AND IDK WHY
-     state === `fastinlove`
+     state = `fastinlove`
      fastinlove(); //displays text
    }
    //within 60*5 frames
    else if (you.gotit) {
      you.currentImage = you.inloveImage; //change image
-     state === `inlove`
+     state = `inlove`
      inlove(); //displays text
    }
    //past 60*5 frames
    else if (you.toolate) {
      you.currentImage = you.darnImage; //change image
-     state === `toolate`
+     state = `toolate`
      nolove(); //displays text
    }
 }
@@ -283,6 +283,6 @@ function gamestop() {
 //reset
 function mousePressed() {
   if (state === `inlove` || state === `fastinlove` || state === `toolate`) { //!!DOESNT WORK AND IDK WHY
-    state === `title`;
+    state = `title`;
   }
 }
