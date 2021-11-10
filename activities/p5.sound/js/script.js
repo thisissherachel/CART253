@@ -8,7 +8,7 @@ A program that plays music based on primitive physics.
 Balls appear once you click and sound is affected with it's position
 **************************************************/
 
-// The balls
+// sounds created
 let balls = [];
 
 // F-minor
@@ -18,7 +18,7 @@ let notes = [`F3`,`G3`,`Ab4`,`Bb4`,`C4`,`Db4`,`Eb4`,`F4`];
 //
 // Just creates the canvas.
 function setup() {
-  createCanvas(600,600);
+  createCanvas(windowWidth,windowHeight);
 
   userStartAudio();
 }
@@ -27,7 +27,7 @@ function setup() {
 //
 // Description of draw() goes here.
 function draw() {
-  background(0);
+  background(255);
 
   for (let i = 0; i < balls.length; i++) {
     let ball = balls[i];
