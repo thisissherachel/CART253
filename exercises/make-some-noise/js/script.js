@@ -10,9 +10,10 @@ Balls appear once you click and sound is affected with it's position
 
 // sounds created
 let sounds = [];
+let soundCreated = false;
 
 // F-minor
-let notes = [`F3`,`G3`,`Ab4`,`Bb4`,`C4`,`Db4`,`Eb4`,`F4`];
+let notes = [`F2`,`G2`,`Ab3`,`Bb3`,`C4`,`Db4`,`Eb6`,`F6`];
 
 //image for object display
 let joyImage;
@@ -48,8 +49,9 @@ function mousePressed() {
   createSound(mouseX,mouseY);
 }
 
-function createSound(x, y, size, minSize, maxSize) {
-  let note = map(notes,size,maxSize,notes[0],notes.length);
+function createSound(x, y) {
+  let note = random(notes);
   let sound = new Sound(x,y,note);
   sounds.push(sound);
+
 }

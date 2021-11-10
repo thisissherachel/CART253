@@ -1,11 +1,11 @@
 class Sound {
 
-  constructor(x, y, note, size, minSize, maxSize, image) {
+  constructor(x, y, note, image) {
     this.x = x;
     this.y = y;
     this.size = 25;
-    this.minSize = 25;
-    this.maxSize = 25*6;
+    this.newSoundSize = 25;
+    this.maxSize = 100;
     this.image = joyImage;
     this.speed = 5;
     this.vx = random(-this.speed,this.speed);
@@ -35,12 +35,12 @@ class Sound {
   }
 
   bounce() {
-    if (this.x + this.size/2 < 0 || this.x - this.size/2 > width) {
+    if (this.x - this.size/2 < 0 || this.x + this.size/2 > width) {
       this.vx = -this.vx;
       this.playNote();
     }
 
-    if (this.y + this.size/2 < 0 || this.y - this.size/2 > height) {
+    if (this.y - this.size/2 < 0 || this.y + this.size/2 > height) {
       this.vy = -this.vy;
       this.playNote();
     }
@@ -50,14 +50,17 @@ class Sound {
     this.synth.play(this.note,0.4,0,0.1);
   }
 
-  mouseIsPressed () {
-    this.size = this.size + 25;
-    constrain(this.size, this.minSize, this.maxSize);
-  }
-
   display() {
+    push();
     imageMode(CENTER);
     image(this.image,this.x,this.y,this.size,this.size);
+    pop();
+
+    if(mouseIsPressed) { //DONT KNOW HOW TO STOP ALREADY CREATED SOUNDS TO NOT INCREASE
+      this.size = this.size + 25;
+      this.size = constrain(this.size, this.size, this.maxSize); //ISNT WORKING??
+      this.oscillator.freq(map(this.size, this.size, this.maxSize, 220, 800));
+    }
   }
 
 }
