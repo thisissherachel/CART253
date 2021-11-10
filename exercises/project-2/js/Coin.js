@@ -1,18 +1,31 @@
 class Coin {
 
-  constructor(x, y, image) {
-    this.x = 0;
-    this.y = 0;
-    this.size = 50;
+  constructor(x, y, image, name) {
+    this.x = x;
+    this.y = y;
+    this.size = 100;
+    this.active = false;
     this.image = joyImage;
-    this.textSize = 15;
-    this.textFill = 255;
+    this.name = name;
+    this.textSize = 20;
+    this.textFill = color(255,0,0);
+  }
+
+  move() {
+    let d = dist(mouseX, mouseY, this.x, this.y);
+
+    if(mouseIsPressed && d < this.size) {
+      this.active = true;
+    }
+
+    if (this.active) {
+      cursor(HAND);
+      this.x = mouseX;
+      this.y = mouseY;
+    } return false;
   }
 
   display() {
-    this.x = random(this.x, 50, width-50);
-    this.y = random(this.y, 50, height-50);
-
     imageMode(CENTER);
     image(this.image,this.x,this.y,this.size,this.size);
 
@@ -20,7 +33,8 @@ class Coin {
     textSize(this.textSize);
     fill(this.textFill);
     textAlign(CENTER,CENTER);
-    text(`coin`,width/2,height/2);
+    text(this.name,this.x,this.y);
     pop();
   }
+
 }

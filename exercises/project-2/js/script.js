@@ -13,10 +13,11 @@ includes:
 
 let backgroundShade = 220; //bakground colour of main page
 
+let slot;
 let coins = [];
-let coinsCount = 6;
+let coinCount = 6;
 
-let coinsName = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
+let state = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
 
 //image for object display
 let joyImage;
@@ -29,24 +30,38 @@ function preload() {
 
 
 //SETUP
-//seting up the coins layout for the multi-game situation
+//seting up the coins layout and slot classes for the multi-game situation
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  for (let i = 0; i < coinsCount; i++) {
-    let x = random(10,width-10);
-    let y = random(10,height-10);
-    let coin = new Coin(x,y);
+  //slot creation and positioning with class
+  let x = width/2;
+  let y = height/2;
+  slot = new Slot(x,y);
+
+  //coins creation and positioning with array and class
+  for (let i = 0; i < coinCount; i++) {
+    let x = random(100, width-100);
+    let y = random(100, height-100);
+    let name = state[i];
+    let coin = new Coin(x, y, image, name);
     coins.push(coin);
+  }
 }
 
 //DRAW
-//for frame by frame program running setup
+//for frame by frame program running setup of slot display and coin display/movement
 function draw() {
   background(backgroundShade);
 
-  for (let i = 0; i < coinsCount; i++) {
+  //allows for display and movement of coin using class
+  for (let i = 0; i < coinCount; i++) {
     let coin = coins[i];
-    coin.display(x,y);
+    coin.display();
+    coin.move();
   }
+  
+  //allows for display and simulation of slot
+  slot.display(); //display slot using class
+  slot.checkForCoin(coin); //check if coin touched slot
 }
