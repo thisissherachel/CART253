@@ -1,22 +1,15 @@
 "use strict";
 
 /**************************************************
-Make Some Noise
+Sound Activity
 Rachel B. Richard
-
-
-EXERCISE
-
-1. Add a(nother) form of user-control
-2. Add a new class and objects
-3. Add at least two endings
 
 A program that plays music based on primitive physics.
 Balls appear once you click and sound is affected with it's position
 **************************************************/
 
-// The balls
-let balls = [];
+// sounds created
+let sounds = [];
 
 // F-minor
 let notes = [`F3`,`G3`,`Ab4`,`Bb4`,`C4`,`Db4`,`Eb4`,`F4`];
@@ -25,7 +18,7 @@ let notes = [`F3`,`G3`,`Ab4`,`Bb4`,`C4`,`Db4`,`Eb4`,`F4`];
 //
 // Just creates the canvas.
 function setup() {
-  createCanvas(600,600);
+  createCanvas(windowWidth,windowHeight);
 
   userStartAudio();
 }
@@ -34,22 +27,23 @@ function setup() {
 //
 // Description of draw() goes here.
 function draw() {
-  background(0);
+  background(255);
 
-  for (let i = 0; i < balls.length; i++) {
-    let ball = balls[i];
-    ball.move();
-    ball.bounce();
-    ball.display();
+  for (let i = 0; i < sounds.length; i++) {
+    let sound = sounds[i];
+    sound.move();
+    sound.bounce();
+    sound.display();
   }
 }
 
 function mousePressed() {
-  createBall(mouseX,mouseY);
+  createSound(mouseX,mouseY);
 }
 
-function createBall(x,y) {
+function createSound(x,y) {
   let note = random(notes);
-  let ball = new Ball(x,y,note);
-  balls.push(ball);
+  let sound = new Sound(x,y,note);
+  sounds.push(sound);
+  sound.mouseIsPressed();
 }

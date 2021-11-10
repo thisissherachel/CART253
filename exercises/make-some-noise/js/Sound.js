@@ -1,13 +1,14 @@
-class Ball {
+class Sound {
 
   constructor(x,y,note) {
     this.x = x;
     this.y = y;
-    this.size = 50;
+    this.size = 25;
+    this.maxSize = 25*6;
     this.fill = {
-      r: random(200,255),
-      g: random(200,255),
-      b: random(200,255)
+      r: random(0,255),
+      g: random(0,255),
+      b: random(0,255)
     };
     this.speed = 3;
     this.vx = random(-this.speed,this.speed);
@@ -16,11 +17,13 @@ class Ball {
     // Oscillator
     this.oscillator = new p5.Oscillator();
     this.nearFreq = 220;
-    this.farFreq = 440;
+    this.farFreq = 340;
     this.oscillator.amp(0.025);
     this.oscillator.start();
 
     // Synth
+    this.rate = 0;
+    this.currentRate = undefined;
     this.note = note;
     this.synth = new p5.PolySynth();
   }
@@ -49,7 +52,10 @@ class Ball {
   }
 
   playNote() {
-    this.synth.play(this.note,0.4,0,0.1);
+    let currentRate = map(this.size, this.size, this.maxSize, -3, 3);
+    this.rate = this.currentRate;
+
+    this.synth.play(this.note,0.8,0,0.1);
   }
 
   display() {
@@ -58,6 +64,11 @@ class Ball {
     fill(this.fill.r,this.fill.g,this.fill.b);
     ellipse(this.x,this.y,this.size);
     pop();
+  }
+
+  mouseIsPressed () {
+    this.size = this.size + 25;
+    constrain(this.size, this.size, this.maxSize);
   }
 
 }
