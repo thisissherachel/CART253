@@ -233,106 +233,106 @@ Rachel B. Richard
 // }
 
 
-// // ARRAYS IN ORDER
-// //using array with pre-determined indexes where they are taken in order and stop.
-//
-// // Our array of lines from one of Hamlet's soliloquys (a sequence
-// // where he essentially talks to himself). We will want to display
-// // each line one after the other as the user clicks.
-// let soliloquy = [
-//   `To be, or not to be`,
-//   `That is the question.`,
-//   `Whether 'tis nobler in the mind`,
-//   `To suffer the slings and arrows`,
-//   `Of outrageous fortune`,
-//   `Or to take arms`,
-//   `Against a sea of sorrows`,
-//   `And by opposing end them.`
-// ];
-//
-// // We need a variable to store the current line we want to display
-// // It should start at ZERO because that's the first index in the array
-// let currentLine = 0;
-//
-// // setup() gets basic styling ready
-// function setup() {
-//   createCanvas(600, 600);
-//   textAlign(CENTER, CENTER);
-//   textSize(32);
-//   fill(255);
-// }
-//
-// // draw() displays the current line
-// function draw() {
-//   background(0);
-//   // Get the element in the array at the CURRENT index (starts at 0 and goes up)
-//   let dialog = soliloquy[currentLine];
-//   // Display the string in that element on the canvas
-//   text(dialog, width / 2, height / 2);
-// }
-//
-// // mousePressed() moves to the next line in the soliloquy unless we've reached the end
-// function mousePressed() {
-//   // Go to the next line in the soliloquy
-//   currentLine = currentLine + 1;
-//   // Check if we've reached the LENGTH of the array
-//   // If we have, we've gone past the end because we started counting at 0
-//   // The LENGTH of our array is 8, but the final element is at index 7
-//   if (currentLine === soliloquy.length) {
-//     // If we've gone past the end, go back one to the last real element
-//     currentLine = soliloquy.length - 1;
-//   }
-// }
+// ARRAYS IN ORDER
+//using array with pre-determined indexes where they are taken in order and stop.
+
+// Our array of lines from one of Hamlet's soliloquys (a sequence
+// where he essentially talks to himself). We will want to display
+// each line one after the other as the user clicks.
+let soliloquy = [
+  `To be, or not to be`,
+  `That is the question.`,
+  `Whether 'tis nobler in the mind`,
+  `To suffer the slings and arrows`,
+  `Of outrageous fortune`,
+  `Or to take arms`,
+  `Against a sea of sorrows`,
+  `And by opposing end them.`
+];
+
+// We need a variable to store the current line we want to display
+// It should start at ZERO because that's the first index in the array
+let currentLine = 0;
+
+// setup() gets basic styling ready
+function setup() {
+  createCanvas(600, 600);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  fill(255);
+}
+
+// draw() displays the current line
+function draw() {
+  background(0);
+  // Get the element in the array at the CURRENT index (starts at 0 and goes up)
+  let dialog = soliloquy[currentLine];
+  // Display the string in that element on the canvas
+  text(dialog, width / 2, height / 2);
+}
+
+// mousePressed() moves to the next line in the soliloquy unless we've reached the end
+function mousePressed() {
+  // Go to the next line in the soliloquy
+  currentLine = currentLine + 1;
+  // Check if we've reached the LENGTH of the array
+  // If we have, we've gone past the end because we started counting at 0
+  // The LENGTH of our array is 8, but the final element is at index 7
+  if (currentLine === soliloquy.length) {
+    // If we've gone past the end, go back one to the last real element
+    currentLine = soliloquy.length - 1;
+  }
+}
 
 
-// //TRAILS
-// //using array to store information during program (allows you to have a trail while keeping a background and manipulate index)
-//
-// let circle = {
-//   x: 0,
-//   y: 0,
-//   size: 100,
-//   trail: [], // Note that we are creating an EMPTY TRAIL ARRAY as a PROPERTY of the circle
-//   trailSize: 20 //max of arrray
-// }
-//
-// // setup() the canvas ready
-// function setup() {
-//   createCanvas(600, 600);
-// }
-//
-// // draw() draws a circle with a trails
-// function draw() {
-//   background(0);
-//
-//   // Use a for loop to go through each element in the circle's trail array in order
-//   for (let i = 0; i < circle.trail.length; i++) {
-//     // Get the element at the index indicated by i (0, then 1, then 2, etc.)
-//     let element = circle.trail[i];
-//     // Draw an ellipse the same size as the circle at that position
-//     ellipse(element.x, element.y, circle.size);
-//   }
-//
-//   // Move the circle to the mouse position
-//   circle.x = mouseX;
-//   circle.y = mouseY;
-//
-//   // Draw the circle
-//   ellipse(circle.x, circle.y, circle.size);
-//
-//   // Create a new position object that stores where the circle is now
-//   // which we can add to the trail to trace the path of the circle
-//   let newTrailPosition = {
-//     x: circle.x,
-//     y: circle.y
-//   };
-//   // Add the position to the circle's trail array
-//   circle.trail.push(newTrailPosition);
-//
-//   if (circle.trail.length > circle.trailSize) {
-//     circle.trail.shift(); //!!removes first index and shift back to 0
-//   }
-// }
+//TRAILS
+//using array to store information during program (allows you to have a trail while keeping a background and manipulate index)
+
+let circle = {
+  x: 0,
+  y: 0,
+  size: 100,
+  trail: [], // Note that we are creating an EMPTY TRAIL ARRAY as a PROPERTY of the circle
+  trailSize: 20 //max of arrray
+}
+
+// setup() the canvas ready
+function setup() {
+  createCanvas(600, 600);
+}
+
+// draw() draws a circle with a trails
+function draw() {
+  background(0);
+
+  // Use a for loop to go through each element in the circle's trail array in order
+  for (let i = 0; i < circle.trail.length; i++) {
+    // Get the element at the index indicated by i (0, then 1, then 2, etc.)
+    let element = circle.trail[i];
+    // Draw an ellipse the same size as the circle at that position
+    ellipse(element.x, element.y, circle.size);
+  }
+
+  // Move the circle to the mouse position
+  circle.x = mouseX;
+  circle.y = mouseY;
+
+  // Draw the circle
+  ellipse(circle.x, circle.y, circle.size);
+
+  // Create a new position object that stores where the circle is now
+  // which we can add to the trail to trace the path of the circle
+  let newTrailPosition = {
+    x: circle.x,
+    y: circle.y
+  };
+  // Add the position to the circle's trail array
+  circle.trail.push(newTrailPosition);
+
+  if (circle.trail.length > circle.trailSize) {
+    circle.trail.shift(); //!!removes first index and shift back to 0
+  }
+}
 
 
 

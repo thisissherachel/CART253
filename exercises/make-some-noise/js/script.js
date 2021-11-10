@@ -1,8 +1,15 @@
 "use strict";
 
 /**************************************************
-Sound Activity
+Make Some Noise
 Rachel B. Richard
+
+
+EXERCISE
+
+1. Add a(nother) form of user-control
+2. Add a new class and objects
+3. Add at least two endings
 
 A program that plays music based on primitive physics.
 Balls appear once you click and sound is affected with it's position
