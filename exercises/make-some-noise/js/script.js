@@ -4,8 +4,7 @@
 Sound Activity
 Rachel B. Richard
 
-A program that plays music based on primitive physics.
-Balls appear once you click and sound is affected with it's position
+Shapes sizes chosen by the user that affects the sounds being played.
 **************************************************/
 
 // sounds created

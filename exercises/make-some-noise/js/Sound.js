@@ -5,8 +5,9 @@ class Sound {
     this.y = y;
     this.size = 25;
     this.newSoundSize = 25;
-    this.maxSize = 100;
+    this.maxSize = 75;
     this.image = joyImage;
+    this.active = false;
     this.speed = 5;
     this.vx = random(-this.speed,this.speed);
     this.vy = random(-this.speed,this.speed);
@@ -56,11 +57,16 @@ class Sound {
     image(this.image,this.x,this.y,this.size,this.size);
     pop();
 
-    if(mouseIsPressed) { //DONT KNOW HOW TO STOP ALREADY CREATED SOUNDS TO NOT INCREASE
+    if(this.active) {
+      this.size = constrain(this.size, this.size, this.maxSize); //ISNT WORKING?
       this.size = this.size + 25;
-      this.size = constrain(this.size, this.size, this.maxSize); //ISNT WORKING??
+
       this.oscillator.freq(map(this.size, this.size, this.maxSize, 220, 800));
     }
+
+    if(mouseIsPressed) {
+      this.active = true;
+    } else this.active = false;
   }
 
 }
