@@ -1,6 +1,6 @@
 class Slot{
 
-  constructor(x, y) {
+  constructor(x, y, w, h) {
     this.x = 0;
     this.y = 0;
     this.w = 20;

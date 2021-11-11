@@ -32,12 +32,12 @@ function preload() {
 //SETUP
 //seting up the coins layout and slot classes for the multi-game situation
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight); //input WEBGL for y axis rotation
 
   //slot creation and positioning with class
   let x = width/2;
   let y = height/2;
-  slot = new Slot(x,y);
+  slot = new Slot(x, y);
 
   //coins creation and positioning with array and class
   for (let i = 0; i < coinCount; i++) {
@@ -54,14 +54,16 @@ function setup() {
 function draw() {
   background(backgroundShade);
 
+  //allows for display of slot
+  slot.display(); //display slot using class
+
   //allows for display and movement of coin using class
   for (let i = 0; i < coinCount; i++) {
     let coin = coins[i];
     coin.display();
-    coin.move();
+    // coin.rotateCoin();
+    coin.mouseInteraction();
+    // coin.checkForSlot(slot); //check if coin touched slot
   }
-  
-  //allows for display and simulation of slot
-  slot.display(); //display slot using class
-  slot.checkForCoin(coin); //check if coin touched slot
+
 }
