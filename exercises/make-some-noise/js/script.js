@@ -11,6 +11,9 @@ The larger the shape size the larger the frequency
 // sounds created
 let sounds = [];
 let soundCreated = false;
+//sizes for objects
+let sizeIncrease = 25;
+let currentSize = 25;
 
 // F-minor
 let notes = [`F2`,`G2`,`Ab3`,`Bb3`,`C4`,`Db4`,`Eb6`,`F6`];
@@ -41,19 +44,18 @@ function draw() {
     let sound = sounds[i];
     sound.move();
     sound.bounce();
-    sound.sounds();
     sound.display();
+    sound.newSound();
   }
 }
 
 function mousePressed() {
-  createSound(mouseX,mouseY);
-}
-
-function createSound(x, y) {
-  let randomNote = random(notes);
+//create sound once mouse is pressed
+  let x = mouseX;
+  let y = mouseY;
   let image = joyImage;
-  let sound = new Sound(x,y,randomNote,image);
-  sounds.push(sound);
+  let randomNote = random(notes);
 
+  let sound = new Sound(x,y,image,randomNote);
+  sounds.push(sound);
 }
