@@ -1,10 +1,10 @@
 class Slot{
 
-  constructor(x, y, w, h) {
-    this.x = 0;
-    this.y = 0;
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
     this.w = 20;
-    this.h = 150;
+    this.h = 200;
     this.fill = 100;
   }
 
@@ -12,9 +12,10 @@ class Slot{
     //display for slot
     push();
     noStroke();
-    fill(slot.fill);
+    // translate(this.x,this.y)
+    fill(this.fill);
     rectMode(CENTER);
-    rect(width/2,height/2,slot.w,slot.h);
+    rect(this.x,this.y,this.w,this.h);
     pop();
   }
 
