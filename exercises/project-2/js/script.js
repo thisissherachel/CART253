@@ -10,30 +10,38 @@ includes:
 - main page layout including coins that can be dragged to slot to change states
 **************************************************/
 
+//background colour of main page
+let backgroundShade = 220;
 
-let backgroundShade = 220; //bakground colour of main page
-
+//objects
 let slot;
 let coins = [];
 let coinCount = 6;
 
 let state = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
 
-//image for object display
+//images
 let joyImage;
+
+//fonts
+let font;
+
 
 //PRELOAD
 // for images and asets going to be used in the running grogram
 function preload() {
-  joyImage = loadImage('assets/images/happy.png');
+  joyImage = loadImage(`assets/images/happy.png`);
+  font = loadFont(`assets/fonts/yoster.ttf`)
 }
 
 
 //SETUP
 //seting up the coins layout and slot classes for the multi-game situation
 function setup() {
-  createCanvas(windowWidth, windowHeight); //input WEBGL for y axis rotation
+  createCanvas(windowWidth, windowHeight, WEBGL); //input WEBGL for y axis rotation
+  ortho();
   cursor(`grab`);
+  textFont(font);
 
   //slot creation and positioning with class
   let x = width/2;
@@ -45,8 +53,9 @@ function setup() {
     let x = random(100, width-100); //random position on window
     let y = random(100, height-100); //random position on window
     let image = joyImage;
+    let font = textFont;
     let name = state[i];
-    let coin = new Coin(x, y, image, name);
+    let coin = new Coin(x, y, image, font, name);
     coins.push(coin);
   }
 }
@@ -55,6 +64,7 @@ function setup() {
 //for frame by frame program running setup of slot display and coin display/movement
 function draw() {
   background(backgroundShade);
+  translate(-width/2,-height/2)
 
   //allows for display of slot
   slot.display(); //display slot using class
@@ -68,10 +78,18 @@ function draw() {
   }
 }
 
-//for when coin is about to interact with slot
-function mouseReleased () {
+function mousePressed() {
   for (let i = 0; i < coins.length; i++) {
     let coin = coins[i];
+    coin.mousePressed();
+  }
+}
+
+//for when coin is about to interact with slot
+function mouseReleased() {
+  for (let i = 0; i < coins.length; i++) {
+    let coin = coins[i];
+    coin.mouseReleased();
     coin.checkForSlot(slot); //check if coin touched slot
   }
 }
