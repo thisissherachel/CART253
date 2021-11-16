@@ -5,6 +5,7 @@ Sound Activity
 Rachel B. Richard
 
 Shapes sizes chosen by the user that affects the sounds being played.
+The larger the shape size the larger the frequency
 **************************************************/
 
 // sounds created
@@ -40,6 +41,7 @@ function draw() {
     let sound = sounds[i];
     sound.move();
     sound.bounce();
+    sound.sounds();
     sound.display();
   }
 }
@@ -49,8 +51,9 @@ function mousePressed() {
 }
 
 function createSound(x, y) {
-  let note = random(notes);
-  let sound = new Sound(x,y,note);
+  let randomNote = random(notes);
+  let image = joyImage;
+  let sound = new Sound(x,y,randomNote,image);
   sounds.push(sound);
 
 }
