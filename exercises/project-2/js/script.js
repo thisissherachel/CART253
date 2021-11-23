@@ -11,7 +11,7 @@ includes:
 **************************************************/
 
 //background colour of main page
-let backgroundShade = 220;
+let backgroundShade = 255;
 
 //objects
 let slot;
@@ -21,7 +21,7 @@ let coinCount = 6;
 let state = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
 
 //images
-let joyImage;
+let coinImage;
 
 //fonts
 let font;
@@ -30,8 +30,8 @@ let font;
 //PRELOAD
 // for images and asets going to be used in the running grogram
 function preload() {
-  joyImage = loadImage(`assets/images/happy.png`);
-  font = loadFont(`assets/fonts/yoster.ttf`)
+  coinImage = loadImage(`assets/images/coin.png`);
+  font = loadFont(`https://use.typekit.net/af/932699/0000000000000000773597c2/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3`); //loading an adobe font
 }
 
 
@@ -50,9 +50,20 @@ function setup() {
 
   //coins creation and positioning with array and class
   for (let i = 0; i < coinCount; i++) {
-    let x = random(100, width-100); //random position on window
-    let y = random(100, height-100); //random position on window
-    let image = joyImage;
+    let x = random(100, width-100); //random x position on window
+    let y = random(100, height-100); //random y position on window
+
+    //REPOSITION IF RANDOM POSITION IS ON SLOT
+      let d = dist(x, y, width/2, height/2); // Calculate the distance between coin and slot
+      while (d < 200) { //check if overlap with where slot is positioned
+        // If it does, try a different random position
+        x = random(0, width-100);
+        y = random(0, height-100);
+        // Recalculate the distance for the next time through the loop
+        d = dist(x, y, width/2, height/2);
+      }
+
+    let image = coinImage;
     let font = textFont;
     let name = state[i];
     let coin = new Coin(x, y, image, font, name);
@@ -73,7 +84,6 @@ function draw() {
   for (let i = 0; i < coins.length; i++) {
     let coin = coins[i];
     coin.display();
-    // coin.rotateCoin();
     coin.drag(); //interaction with mouse being pressed
   }
 }

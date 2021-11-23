@@ -8,10 +8,10 @@ class Coin {
     this.beingDragged = false;
     this.active = true; //if coin should be displayed
     this.image = image; //display image
-    this.font = font;
+    this.font = font; //importing external font
     this.name = name; //coin name i.e loaded states
     this.textSize = 20;
-    this.textFill = color(255,0,0);
+    this.textFill = color(0,0,0);
   }
 
   //coin and slot interaction
@@ -38,6 +38,7 @@ class Coin {
     } else cursor(`grab`);
   }
 
+  //controlling dragging
   mousePressed() {
     let d = dist(mouseX, mouseY, this.x, this.y); //finding when mouse is hovering over the object
 
@@ -47,6 +48,7 @@ class Coin {
     }
   }
 
+  //controlling dropping object
   mouseReleased() {
     this.beingDragged = false;
   }
@@ -55,17 +57,21 @@ class Coin {
   display() {
     if (this.active) { //only display if not dropped in slot
       push();
-      //display for image
-      imageMode(CENTER);
-      translate(this.x,this.y)
-      rotateY(radians(this.angle))
-      fill(0,0,0,0);
-      image(this.image,0,0,this.size,this.size);
+      //allowing for rotation
+      translate(this.x,this.y);
+      rotateY(radians(this.angle));
+      //base shape with image mapped as texture
+      push();
+      noStroke();
+      fill(0,0,0);
+      texture(this.image);
+      ellipse(0,0,this.size,this.size);
+      pop();
       //display for text
       textSize(this.textSize);
       fill(this.textFill);
       textAlign(CENTER,CENTER);
-      text(this.name,0,0);
+      text(this.name,0, -(this.size/2+20));
       pop();
 
       this.angle += 1; //allows for rotation of object
