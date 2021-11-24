@@ -1,6 +1,6 @@
 class Coin {
 
-  constructor(x, y, image, font, name) {
+  constructor(x, y, image, font, name, state) {
     this.x = x;
     this.y = y;
     this.size = 150;
@@ -10,6 +10,7 @@ class Coin {
     this.image = image; //display image
     this.font = font; //importing external font
     this.name = name; //coin name i.e loaded states
+    this.state = undefined;
     this.textSize = 20;
     this.textFill = color(0,0,0);
   }
@@ -18,10 +19,48 @@ class Coin {
   checkForSlot(slot) {
     let d = dist(slot.x, slot.y, this.x, this.y); //finding when coin is hovering over slot
 
-    //make coin disapear when coin is touching the slot
-    if (d < this.size/2) {
-      console.log(`you found the slot!`);
+    //making coin dissapear when coin is touching the slot and starting a game state asscociated with coin
+    //VISUAL PLAY
+    if (d < this.size/2 && this.name === `Visual Play`) {
+      console.log(`starting game Visual Play...`);
       this.active = false;
+      //start state associated to gameName
+      this.state = `Visual Play`;
+    }
+    //SOUND PLAY
+    else if (d < this.size/2 && this.name === `Sound Play`) {
+      console.log(`starting game Sound Play...`);
+      this.active = false;
+      //start state associated to gameName
+      this.state = `Sound Play`;
+    }
+    //DODGE SADNESS
+    else if (d < this.size/2 && this.name === `Dodge Sadness`) {
+      console.log(`starting game Dodge Sadness...`);
+      this.active = false;
+      //start state associated to gameName
+      this.state = `Dodge Sadness`;
+    }
+    //CATCH JOY
+    else if (d < this.size/2 && this.name === `Catch Joy`) {
+      console.log(`starting game Catch Joy...`);
+      this.active = false;
+      //start state associated to gameName
+      this.state = `Catch Joy`;
+    }
+    //KEEP JOY
+    else if (d < this.size/2 && this.name === `Keep Joy`) {
+      console.log(`starting game Keep Joy...`);
+      this.active = false;
+      //start state associated to gameName
+      this.state = `Keep Joy`;
+    }
+    //JUGGLE JOY
+    else if (d < this.size/2 && this.name === `Juggle Joy`) {
+      console.log(`starting game Juggle Joy...`);
+      this.active = false;
+      //start state associated to gameName
+      this.state = `Juggle Joy`;
     }
   }
 

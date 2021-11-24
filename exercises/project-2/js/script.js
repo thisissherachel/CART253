@@ -4,10 +4,8 @@
 Just have fun.
 Rachel B. Richard
 
-PROJECT 02 - PROTOTYPE
-
-includes:
-- main page layout including coins that can be dragged to slot to change states
+PROJECT 02
+Program made that allows one to begin a game by dragging a coin into a slot
 **************************************************/
 
 //background colour of main page
@@ -18,7 +16,11 @@ let slot;
 let coins = [];
 let coinCount = 6;
 
-let state = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
+//state option are `intro`, `simulation`, and `game` which is linked to all the games linked to the coins
+let state = `intro`;
+
+//name for the game that will be stored in coins
+let gameName = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
 
 //images
 let coinImage;
@@ -36,12 +38,11 @@ function preload() {
 
 
 //SETUP
-//seting up the coins layout and slot classes for the multi-game situation
+//seting up the states, the coins and slot layout, and classes for the multi-game situation
 function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL); //input WEBGL for y axis rotation
-  ortho();
-  cursor(`grab`);
-  textFont(font);
+  createCanvas(windowWidth, windowHeight, WEBGL); //input WEBGL for 3D
+  ortho(); //setting camera angle for 3D
+  textFont(font); //calling font variable
 
   //slot creation and positioning with class
   let x = width/2;
@@ -65,17 +66,65 @@ function setup() {
 
     let image = coinImage;
     let font = textFont;
-    let name = state[i];
-    let coin = new Coin(x, y, image, font, name);
+    let name = gameName[i];
+    let state = undefined; //how will i change the state?
+    let coin = new Coin(x, y, image, font, name, state);
     coins.push(coin);
   }
 }
+
 
 //DRAW
 //for frame by frame program running setup of slot display and coin display/movement
 function draw() {
   background(backgroundShade);
   translate(-width/2,-height/2)
+
+  if (state === `intro`) {
+    intro();
+  }
+
+  else if (state === `simulation`) {
+    simulation();
+  }
+}
+
+
+//STATES
+//compartmentalizing what happens where. (intro vs. coin menu simulation)
+function intro() {
+  //setting user arrow to pointer to allow user to notice their clicking ability
+  cursor(`pointer`);
+
+  push();
+  textSize(69);
+  fill(0);
+  textAlign(CENTER,CENTER);
+  text(`Just have some fun!`,width/2,height/2);
+
+  pop();
+  push();
+  textSize(20);
+  fill(0);
+  textAlign(CENTER,CENTER);
+  text(`
+    Welcome to an achive of an intro to the p5 java library!
+    This world is creative, fun, and joyful.
+    Navigate around the menu by dragging coins to the slot and discovering where they bring you.`
+    ,width/2,height/2+100);
+  pop();
+
+  push();
+  textSize(15);
+  fill(0);
+  textAlign(CENTER,CENTER);
+  text(`click to start :)`,width/2,height/2+200);
+  pop();
+}
+
+function simulation() {
+  //setting user arrow to hand to allow user to notice their grabbing ability
+  cursor(`grab`);
 
   //allows for display of slot
   slot.display(); //display slot using class
@@ -88,18 +137,25 @@ function draw() {
   }
 }
 
+
+//USER INTERACTION
+//allowing for dragging
 function mousePressed() {
+  //load menu page
+   if (state === `intro`) {
+    state = `simulation`;
+  }
+
   for (let i = 0; i < coins.length; i++) {
     let coin = coins[i];
     coin.mousePressed();
   }
 }
-
-//for when coin is about to interact with slot
+//allowing for dropping
 function mouseReleased() {
   for (let i = 0; i < coins.length; i++) {
     let coin = coins[i];
     coin.mouseReleased();
-    coin.checkForSlot(slot); //check if coin touched slot
+    coin.checkForSlot(slot); //check if coin is touching slot
   }
 }

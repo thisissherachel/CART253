@@ -1,3 +1,3 @@
 # Just have fun
 
-Plan for this program to include and hone in on all projects I work on this semester.
+A creative computation web archive that allows you to visualize everything explored in the p5 library.
