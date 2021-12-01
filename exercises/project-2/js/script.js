@@ -23,6 +23,7 @@ let state = `intro`;
 let gameName = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
 
 //images
+let happyImage;
 let coinImage;
 
 //fonts
@@ -32,6 +33,7 @@ let font;
 //PRELOAD
 // for images and asets going to be used in the running grogram
 function preload() {
+  happyImage = loadImage(`assets/images/happy.png`)
   coinImage = loadImage(`assets/images/coin.png`);
   font = loadFont(`https://use.typekit.net/af/932699/0000000000000000773597c2/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3`); //loading an adobe font
 }
@@ -67,7 +69,7 @@ function setup() {
     let image = coinImage;
     let font = textFont;
     let name = gameName[i];
-    let state = undefined; //how will i change the state?
+    let state = undefined;
     let coin = new Coin(x, y, image, font, name, state);
     coins.push(coin);
   }
@@ -96,13 +98,17 @@ function intro() {
   //setting user arrow to pointer to allow user to notice their clicking ability
   cursor(`pointer`);
 
+  // //background interactivity
+  // interactiveBackground();
+
+  //text
   push();
-  textSize(69);
+  textSize(100);
   fill(0);
   textAlign(CENTER,CENTER);
-  text(`Just have some fun!`,width/2,height/2);
-
+  text(`Just have some fun!`,width/2,height/3);
   pop();
+
   push();
   textSize(20);
   fill(0);
@@ -110,15 +116,16 @@ function intro() {
   text(`
     Welcome to an achive of an intro to the p5 java library!
     This world is creative, fun, and joyful.
+
     Navigate around the menu by dragging coins to the slot and discovering where they bring you.`
-    ,width/2,height/2+100);
+    ,width/2,height/3+100);
   pop();
 
   push();
-  textSize(15);
+  textSize(30);
   fill(0);
   textAlign(CENTER,CENTER);
-  text(`click to start :)`,width/2,height/2+200);
+  text(`click to enter :)`,width/2,height/3+200);
   pop();
 }
 
@@ -158,4 +165,40 @@ function mouseReleased() {
     coin.mouseReleased();
     coin.checkForSlot(slot); //check if coin is touching slot
   }
+}
+
+
+//INTERACTIVE BACKGROUND
+//fun interactive background that reacts to the movement of the users mouse
+function interactiveBackground() {
+  //setting up for loop for smileys across window
+  let smileWidth = 40; //setting smiley size
+  let smileHeight = smileWidth; //square
+  let mouseColor = color(`rgb(255, 255, 0)`); //smiley color
+
+  for (let x = 5; x < width-5; x+=50) { //setting grid for smileys on x-axis
+    for (let y = 5; y < height-5; y+=50) { //setting grid for smileys on y-axis
+      //base
+      push();
+      stroke(mouseColor);
+      strokeWeight(5);
+      noFill();
+      ellipse(x+20,y+20,smileWidth,smileHeight);
+      pop();
+      //eyes
+      push();
+      fill(mouseColor);
+      noStroke();
+      ellipse(x+12,y+14,smileWidth/8,smileWidth/8);
+      ellipse(x+28,y+14,smileWidth/8,smileWidth/8);
+      //mouth
+      push();
+      stroke(mouseColor);
+      strokeWeight(5);
+      noFill();
+      arc(x+20,y+20,25,25,0,PI,OPEN);
+      pop();
+    }
+  }
+
 }

@@ -1,3 +1,22 @@
+class KeepJoy extends Game {
+
+  constructor() {
+
+  }
+
+  display(){
+
+  }
+
+  mousePressed() {
+
+  }
+
+  mouseReleased() {
+
+  }
+}
+
 "use strict";
 
 /**************************************************

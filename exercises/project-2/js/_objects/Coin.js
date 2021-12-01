@@ -1,4 +1,5 @@
 class Coin {
+//coin that is linked to a game and can be dragged and dropped
 
   constructor(x, y, image, font, name, state) {
     this.x = x;
@@ -20,48 +21,48 @@ class Coin {
     let d = dist(slot.x, slot.y, this.x, this.y); //finding when coin is hovering over slot
 
     //making coin dissapear when coin is touching the slot and starting a game state asscociated with coin
-    //VISUAL PLAY
-    if (d < this.size/2 && this.name === `Visual Play`) {
-      console.log(`starting game Visual Play...`);
-      this.active = false;
-      //start state associated to gameName
-      this.state = `Visual Play`;
-    }
-    //SOUND PLAY
-    else if (d < this.size/2 && this.name === `Sound Play`) {
-      console.log(`starting game Sound Play...`);
-      this.active = false;
-      //start state associated to gameName
-      this.state = `Sound Play`;
-    }
-    //DODGE SADNESS
-    else if (d < this.size/2 && this.name === `Dodge Sadness`) {
-      console.log(`starting game Dodge Sadness...`);
-      this.active = false;
-      //start state associated to gameName
-      this.state = `Dodge Sadness`;
-    }
-    //CATCH JOY
-    else if (d < this.size/2 && this.name === `Catch Joy`) {
-      console.log(`starting game Catch Joy...`);
-      this.active = false;
-      //start state associated to gameName
-      this.state = `Catch Joy`;
-    }
-    //KEEP JOY
-    else if (d < this.size/2 && this.name === `Keep Joy`) {
-      console.log(`starting game Keep Joy...`);
-      this.active = false;
-      //start state associated to gameName
-      this.state = `Keep Joy`;
-    }
-    //JUGGLE JOY
-    else if (d < this.size/2 && this.name === `Juggle Joy`) {
-      console.log(`starting game Juggle Joy...`);
-      this.active = false;
-      //start state associated to gameName
-      this.state = `Juggle Joy`;
-    }
+    // //VISUAL PLAY
+    // if (d < this.size/2 && this.name === `Visual Play`) {
+    //   console.log(`starting game Visual Play...`);
+    //   this.active = false;
+    //   //start state associated to gameName
+    //   this.state = `Visual Play`;
+    // }
+    // //SOUND PLAY
+    // else if (d < this.size/2 && this.name === `Sound Play`) {
+    //   console.log(`starting game Sound Play...`);
+    //   this.active = false;
+    //   //start state associated to gameName
+    //   this.state = `Sound Play`;
+    // }
+    // //DODGE SADNESS
+    // else if (d < this.size/2 && this.name === `Dodge Sadness`) {
+    //   console.log(`starting game Dodge Sadness...`);
+    //   this.active = false;
+    //   //start state associated to gameName
+    //   this.state = `Dodge Sadness`;
+    // }
+    // //CATCH JOY
+    // else if (d < this.size/2 && this.name === `Catch Joy`) {
+    //   console.log(`starting game Catch Joy...`);
+    //   this.active = false;
+    //   //start state associated to gameName
+    //   this.state = `Catch Joy`;
+    // }
+    // //KEEP JOY
+    // else if (d < this.size/2 && this.name === `Keep Joy`) {
+    //   console.log(`starting game Keep Joy...`);
+    //   this.active = false;
+    //   //start state associated to gameName
+    //   this.state = `Keep Joy`;
+    // }
+    // //JUGGLE JOY
+    // else if (d < this.size/2 && this.name === `Juggle Joy`) {
+    //   console.log(`starting game Juggle Joy...`);
+    //   this.active = false;
+    //   //start state associated to gameName
+    //   this.state = `Juggle Joy`;
+    // }
   }
 
 
