@@ -1,22 +1,3 @@
-class VisualPlay extends Game {
-
-  constructor() {
-
-  }
-
-  display(){
-
-  }
-
-  mousePressed() {
-
-  }
-
-  mouseReleased() {
-
-  }
-}
-
 "use strict";
 
 /**************************************************

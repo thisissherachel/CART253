@@ -8,16 +8,17 @@ PROJECT 02
 Program made that allows one to begin a game by dragging a coin into a slot
 **************************************************/
 
-//MADE MY DRAGGINGN NOT WORK
-// //framerate at which the colours change
-// let fr = 1;
+//background
+let cnv; //canvas variable
+let backgroundColor; //background colour variable
+let funBackground; //variable for smilies background class
 
 //objects
-let funBackground;
-let postIt;
-let slot;
-let coins = [];
-let coinCount = 6;
+let postIt; //post it note for intro info
+let slot; //slot for coing to interact with
+let coin; //coin associate to game
+let coins = []; //coins array for association to games array
+let coinCount = 6; //number of coins/games
 
 //state option are `intro`, `simulation`, and `game` which is linked to all the games linked to the coins
 let state = `intro`;
@@ -26,9 +27,13 @@ let state = `intro`;
 let gameName = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
 
 //images
-let header;
-let happyImage;
-let coinImage;
+let header; //graphic
+let coinImage; //object
+let happyImage; //user option
+let sadImage; //user option
+let cryImage; //user option
+let joyImage; //object option
+let sadnessImage; //object option
 
 //fonts
 let font;
@@ -38,8 +43,12 @@ let font;
 // for images and asets going to be used in the running grogram
 function preload() {
   header = loadImage(`assets/images/justhavesomefun.png`);
-  happyImage = loadImage(`assets/images/happy.png`);
   coinImage = loadImage(`assets/images/coin.png`);
+  happyImage = loadImage(`assets/images/happy.png`);
+  sadImage = loadImage(`assets/images/sad.png`);
+  cryImage = loadImage(`assets/images/cry.png`);
+  joyImage = loadImage(`assets/images/joy.png`);
+  sadnessImage = loadImage(`assets/images/sadness.png`);
   font = loadFont(`https://use.typekit.net/af/932699/0000000000000000773597c2/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3`); //loading an adobe font
 }
 
@@ -54,7 +63,10 @@ function setup() {
 
   // //NOT A GREAT METHOD
   // frameRate(fr); //allow for rotation of colours in background
-  background(random(255),random(255),random(255)); //background colour a random colour
+
+  //random colour for background
+  backgroundColor = (color(random(255),random(255),random(255)));
+  background(backgroundColor);
 
   //background creation and positioning with class
   funBackground = new FunBackground();
@@ -84,10 +96,12 @@ function setup() {
     let image = coinImage;
     let font = textFont;
     let name = gameName[i];
-    let gameState = undefined;
-    let coin = new Coin(x, y, image, font, name, gameState);
+    coin = new Coin(x, y, image, font, name);
     coins.push(coin);
   }
+
+  let gameTimer = 0; //timer counting the frames during the game
+  let gameLength = 60 * 10; // 10 seconds till game over
 }
 
 
@@ -113,6 +127,7 @@ function draw() {
 //STATES
 //compartmentalizing what happens where. (intro vs. coin menu simulation)
 
+//INTRO STATE explains game
 function intro() {
   //setting user arrow to pointer to allow user to notice their clicking ability
   cursor(`pointer`);
@@ -129,12 +144,16 @@ function intro() {
   pop();
 }
 
-
+//SIMULATION STATE is the coin slot machine simulatin
 function simulation() {
-  //setting user arrow to hand to allow user to notice their grabbing ability
-  cursor(`grab`);
+  //creating a canvas for the simulation to be inside
+  let cnv = createCanvas(windowWidth*0.95,windowHeight*0.95);
+  cnv.position(windowWidth*0.05/2,windowHeight*0.05/2); //centering canvas
+  ortho(); //setting camera angle for 3D
 
-  background(255);
+  //background colour setup
+  colorBackground();
+  background(backgroundColor);
 
   //allows for display of slot
   slot.display(); //display slot using class
@@ -142,61 +161,26 @@ function simulation() {
   //allows for display and movement of coin using class
   for (let i = 0; i < coins.length; i++) {
     let coin = coins[i];
-    let gameState =
     coin.display();
     coin.drag(); //interaction with mouse being pressed
-
-    //loading the game state on to each coin
-    if (coin.gameState === `CatchJoy`) {
-      state = `game`;
-    }
-    if (coin.gameState === `DodgeSadness`) {
-      state = `game`;
-    }
-    if (coin.gameState === `KeepJoy`) {
-      state = `game`;
-    }
-    if (coin.gameState === `SoundPlay`) {
-      state = `game`;
-    }
-    if (coin.gameState === `VisualPlay`) {
-      state = `game`;
-    }
   }
 }
 
+//GAME STATE is the setup for the game play
 function game() {
   //creating a canvas for the game to play inside
-  createCanvas(windowWidth*0.8,windowHeight*0.8);
+  let cnv = createCanvas(windowWidth*0.95,windowHeight*0.95);
+  cnv.position(windowWidth*0.05/2,windowHeight*0.05/2); //centering canvas
+  background(255);
 
-  //creating a button to go back to simulation state
-  gobackButton();
+  console.log(`game state`);
 
-  //allows for display and movement of coin using class
-  for (let i = 0; i < coins.length; i++) {
-    let coin = coins[i];
-    coin.display();
-    coin.drag(); //interaction with mouse being pressed
-
-    //loading the game state on to each coin
-    if (gameState === `CatchJoy`) {
-      state = `game`;
-    }
-    if (gameState === `DodgeSadness`) {
-      state = `game`;
-    }
-    if (gameState === `KeepJoy`) {
-      state = `game`;
-    }
-    if (gameState === `SoundPlay`) {
-      state = `game`;
-    }
-    if (gameState === `VisualPlay`) {
-      state = `game`;
-    }
   }
 
-}
+//   //creating a button to go back to simulation state
+//   gobackButton(); {
+//
+// }
 
 
 
@@ -218,28 +202,62 @@ function mouseReleased() {
   for (let i = 0; i < coins.length; i++) {
     let coin = coins[i];
     coin.mouseReleased();
-    coin.checkForSlot(slot); //check if coin is touching slot
+    coin.checkForSlot(slot); //check if coin is touching slot and chand gameState to the name of the coin
+  }
+
+  //NOT WORKING
+  //check if check for slot occured
+  if(coin.checkForSlot(slot)) {
+    //loading the game state on to each coin
+    if (!coin.gameState === `CatchJoy`) {
+      console.log(`game state`);
+      state = `game`;
+    }
+    else if (!coin.gameState === `DodgeSadness`) {
+      state = `game`;
+    }
+    else if (!coin.gameState === `KeepJoy`) {
+      state = `game`;
+    }
+    else if (!coin.gameState === `SoundPlay`) {
+      state = `game`;
+    }
+    else if (!coin.gameState === `VisualPlay`) {
+      state = `game`;
+    }
   }
 }
-//a button to go back to simulation state while in game state
-function gobackButton() {
 
-  let gobackButton = {
-    x: windowWidth -100,
-    y: windowHeight*1.0 - 100,
-    size: 100,
-    image: coinImage,
-    text: `< GO BACK`,
-  };
 
-  push();
-  //display for image
-  imageMode(CENTER);
-  image(gobackButton.image,gobackButton.x,gobackButton.y,gobackButton.size,gobackButton.size);
-  //display for text
-  textSize(30);
-  fill(255);
-  textAlign(CENTER,CENTER);
-  text(gobackButton.text,0,this.size/2);
-  pop();
+function colorBackground() {
+  //making a function to change the background colour with frame counts
+  if (frameCount % 90 === 0) {
+    console.log(`change colour`);
+    //change the random colour
+    backgroundColor = (color(random(255),random(255),random(255)));
+  }
+
 }
+
+// //a button to go back to simulation state while in game state
+// function gobackButton() {
+//
+//   let gobackButton = {
+//     x: width-100,
+//     y: height*1.0 - 100,
+//     size: 100,
+//     image: coinImage,
+//     text: `< GO BACK`,
+//   };
+//
+//   push();
+//   //display for image
+//   imageMode(CENTER);
+//   image(gobackButton.image,gobackButton.x,gobackButton.y,gobackButton.size,gobackButton.size);
+//   //display for text
+//   textSize(30);
+//   fill(255);
+//   textAlign(CENTER,CENTER);
+//   text(gobackButton.text,0,this.size/2);
+//   pop();
+// }

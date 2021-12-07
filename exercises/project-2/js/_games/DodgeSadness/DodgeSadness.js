@@ -1,22 +1,3 @@
-class DodgeSadness extends Game {
-
-  constructor() {
-
-  }
-
-  display(){
-
-  }
-
-  mousePressed() {
-
-  }
-
-  mouseReleased() {
-
-  }
-}
-
 "use strict";
 
 /**************************************************

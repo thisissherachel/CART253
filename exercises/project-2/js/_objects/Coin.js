@@ -1,7 +1,7 @@
 class Coin {
 //coin that is linked to a game and can be dragged and dropped
 
-  constructor(x, y, image, font, name, gameState) {
+  constructor(x, y, image, font, name) {
     this.x = x;
     this.y = y;
     this.size = 150;
@@ -14,6 +14,7 @@ class Coin {
     this.gameState = undefined; //game the coins that is loaded on coin
     this.textSize = 20;
     this.textFill = color(0,0,0);
+    this.background = undefined;
   }
 
   //coin and slot interaction
@@ -27,6 +28,7 @@ class Coin {
       this.active = false;
       //start state associated to gameName
       this.gameState = `Visual Play`;
+      window.location = `https://thisissherachel.github.io/CART253/exercises/I-like-to-move-it-move-it/`;
     }
     //SOUND PLAY
     else if (d < this.size/2 && this.name === `Sound Play`) {
@@ -34,6 +36,7 @@ class Coin {
       this.active = false;
       //start state associated to gameName
       this.gameState = `Sound Play`;
+      window.location = `https://thisissherachel.github.io/CART253/exercises/make-some-noise/`;
     }
     //DODGE SADNESS
     else if (d < this.size/2 && this.name === `Dodge Sadness`) {
@@ -41,6 +44,7 @@ class Coin {
       this.active = false;
       //start state associated to gameName
       this.gameState = `Dodge Sadness`;
+      window.location = `https://thisissherachel.github.io/CART253/exercises/dodge-em/`;
     }
     //CATCH JOY
     else if (d < this.size/2 && this.name === `Catch Joy`) {
@@ -48,6 +52,7 @@ class Coin {
       this.active = false;
       //start state associated to gameName
       this.gameState = `Catch Joy`;
+      window.location = `https://thisissherachel.github.io/CART253/exercises/age-of-aquariums/`;
     }
     //KEEP JOY
     else if (d < this.size/2 && this.name === `Keep Joy`) {
@@ -55,6 +60,7 @@ class Coin {
       this.active = false;
       //start state associated to gameName
       this.gameState = `Keep Joy`;
+      window.location = `https://thisissherachel.github.io/CART253/exercises/jungle-garden/`;
     }
     //JUGGLE JOY
     else if (d < this.size/2 && this.name === `Juggle Joy`) {
@@ -62,6 +68,7 @@ class Coin {
       this.active = false;
       //start state associated to gameName
       this.gameState = `Juggle Joy`;
+      window.location = `https://thisissherachel.github.io/CART253/activities/object-oriented-activity/`;
     }
   }
 
@@ -75,7 +82,7 @@ class Coin {
         //update objects position with mouse
         this.x = mouseX;
         this.y = mouseY;
-    } else cursor(`grab`);
+    } else {cursor(`grab`);}
   }
 
   //controlling dragging
@@ -95,6 +102,7 @@ class Coin {
 
   //display image and text as coin
   display() {
+
     if (this.active) { //only display if not dropped in slot
       push();
       //allowing for rotation
@@ -117,5 +125,12 @@ class Coin {
       this.angle += 1; //allows for rotation of object
     }
   }
+
+  // //making a function to chnage the background colour with frame counts
+  // displayBackground() {
+  //   if (frameCount % 100) {
+  //     background(random(255))
+  //   }
+  // }
 
 }

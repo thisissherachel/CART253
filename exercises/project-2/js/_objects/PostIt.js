@@ -7,7 +7,7 @@ class PostIt {
     this.size = 2*height/3;
     this.fill = color(`rgb(255, 253, 140)`);
     this.text1 =
-`Welcome to an achive of an intro
+`Welcome to an archive of an intro
 to the p5 java library!
 
 This world is creative, fun, and joyful.`;
@@ -47,7 +47,7 @@ slot and discovering where they bring you.`;
     textSize(30);
     fill(0);
     textAlign(CENTER,CENTER);
-    text(this.text3,this.x,this.y+200);
+    text(this.text3,this.x,this.y+300);
     pop();
 
   }

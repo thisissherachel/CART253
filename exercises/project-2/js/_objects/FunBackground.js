@@ -6,7 +6,7 @@ class FunBackground {
     this.y = 0;
     this.w = 40;
     this.h = this.w; //square
-    this.black = (color(`rgb(0,0,0)`));
+    this.color = (color(`rgba(255,255,255,0.25)`));
 }
 
   displaySmiles() {
@@ -15,21 +15,21 @@ class FunBackground {
         for (let y = 5; y < height-5; y+=50) { //setting grid for smileys on y-axis
           //base
           push();
-          stroke(this.black);
+          stroke(this.color);
           strokeWeight(5);
           noFill();
           ellipse(x+20,y+20,this.w,this.h);
           pop();
           //eyes
           push();
-          fill(this.black);
+          fill(this.color);
           noStroke();
           ellipse(x+12,y+14,this.w/8,this.h/8);
           ellipse(x+28,y+14,this.w/8,this.h/8);
           pop();
           //mouth
           push();
-          stroke(this.black);
+          stroke(this.color);
           strokeWeight(5);
           noFill();
           arc(x+20,y+20,25,25,0,PI,OPEN);

@@ -1,22 +1,3 @@
-class JuggleJoy extends Game {
-
-  constructor() {
-
-  }
-
-  display(){
-
-  }
-
-  mousePressed() {
-
-  }
-
-  mouseReleased() {
-
-  }
-}
-
 "use strict";
 
 /**************************************************
