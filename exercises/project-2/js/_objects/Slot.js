@@ -1,9 +1,9 @@
-class Slot{
+class Slot {
 //slot for coins to bedropped in
 
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+  constructor() {
+    this.x = width/2;
+    this.y = height/2;
     this.w = 20;
     this.h = 200;
     this.fill = 100;

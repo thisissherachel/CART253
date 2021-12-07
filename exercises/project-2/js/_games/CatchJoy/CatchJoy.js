@@ -1,22 +1,3 @@
-class CatchJoy extends Game {
-
-  constructor() {
-
-  }
-
-  display(){
-
-  }
-
-  mousePressed() {
-
-  }
-
-  mouseReleased() {
-
-  }
-}
-
 "use strict";
 
 /**************************************************

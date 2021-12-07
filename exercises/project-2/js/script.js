@@ -8,10 +8,13 @@ PROJECT 02
 Program made that allows one to begin a game by dragging a coin into a slot
 **************************************************/
 
-//background colour of main page
-let backgroundShade = 255;
+//MADE MY DRAGGINGN NOT WORK
+// //framerate at which the colours change
+// let fr = 1;
 
 //objects
+let funBackground;
+let postIt;
 let slot;
 let coins = [];
 let coinCount = 6;
@@ -23,6 +26,7 @@ let state = `intro`;
 let gameName = [`Visual Play`, `Sound Play`, `Dodge Sadness`, `Catch Joy`, `Keep Joy`, `Juggle Joy`];
 
 //images
+let header;
 let happyImage;
 let coinImage;
 
@@ -33,7 +37,8 @@ let font;
 //PRELOAD
 // for images and asets going to be used in the running grogram
 function preload() {
-  happyImage = loadImage(`assets/images/happy.png`)
+  header = loadImage(`assets/images/justhavesomefun.png`);
+  happyImage = loadImage(`assets/images/happy.png`);
   coinImage = loadImage(`assets/images/coin.png`);
   font = loadFont(`https://use.typekit.net/af/932699/0000000000000000773597c2/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3`); //loading an adobe font
 }
@@ -43,13 +48,23 @@ function preload() {
 //seting up the states, the coins and slot layout, and classes for the multi-game situation
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL); //input WEBGL for 3D
+  translate(-width/2,-height/2); // setting origin point to center for WEBGL
   ortho(); //setting camera angle for 3D
   textFont(font); //calling font variable
 
+  // //NOT A GREAT METHOD
+  // frameRate(fr); //allow for rotation of colours in background
+  background(random(255),random(255),random(255)); //background colour a random colour
+
+  //background creation and positioning with class
+  funBackground = new FunBackground();
+  funBackground.displaySmiles();
+
+  //postIt creation and positioning with class
+  postIt = new PostIt();
+
   //slot creation and positioning with class
-  let x = width/2;
-  let y = height/2;
-  slot = new Slot(x, y);
+  slot = new Slot();
 
   //coins creation and positioning with array and class
   for (let i = 0; i < coinCount; i++) {
@@ -69,8 +84,8 @@ function setup() {
     let image = coinImage;
     let font = textFont;
     let name = gameName[i];
-    let state = undefined;
-    let coin = new Coin(x, y, image, font, name, state);
+    let gameState = undefined;
+    let coin = new Coin(x, y, image, font, name, gameState);
     coins.push(coin);
   }
 }
@@ -79,8 +94,7 @@ function setup() {
 //DRAW
 //for frame by frame program running setup of slot display and coin display/movement
 function draw() {
-  background(backgroundShade);
-  translate(-width/2,-height/2)
+    translate(-width/2,-height/2); // setting origin point to center with WEBGL again for draw.
 
   if (state === `intro`) {
     intro();
@@ -89,49 +103,38 @@ function draw() {
   else if (state === `simulation`) {
     simulation();
   }
+
+  else if (state === `game`) {
+    game();
+  }
 }
 
 
 //STATES
 //compartmentalizing what happens where. (intro vs. coin menu simulation)
+
 function intro() {
   //setting user arrow to pointer to allow user to notice their clicking ability
   cursor(`pointer`);
 
-  // //background interactivity
-  // interactiveBackground();
+  //allows for display of post-it
+  postIt.display(); //display post-it using class
 
-  //text
+  //header (image in top left corner)
   push();
-  textSize(100);
-  fill(0);
-  textAlign(CENTER,CENTER);
-  text(`Just have some fun!`,width/2,height/3);
-  pop();
-
-  push();
-  textSize(20);
-  fill(0);
-  textAlign(CENTER,CENTER);
-  text(`
-    Welcome to an achive of an intro to the p5 java library!
-    This world is creative, fun, and joyful.
-
-    Navigate around the menu by dragging coins to the slot and discovering where they bring you.`
-    ,width/2,height/3+100);
-  pop();
-
-  push();
-  textSize(30);
-  fill(0);
-  textAlign(CENTER,CENTER);
-  text(`click to enter :)`,width/2,height/3+200);
+  let headerAR = header.width / header.height; //setting a value for the header's aspect ratio
+  let headerWidth = 3*width/4;
+  let headerHeight = headerWidth/headerAR;
+  image(header,0.05*width,0.1*height,headerWidth,headerHeight);
   pop();
 }
+
 
 function simulation() {
   //setting user arrow to hand to allow user to notice their grabbing ability
   cursor(`grab`);
+
+  background(255);
 
   //allows for display of slot
   slot.display(); //display slot using class
@@ -139,10 +142,62 @@ function simulation() {
   //allows for display and movement of coin using class
   for (let i = 0; i < coins.length; i++) {
     let coin = coins[i];
+    let gameState =
     coin.display();
     coin.drag(); //interaction with mouse being pressed
+
+    //loading the game state on to each coin
+    if (coin.gameState === `CatchJoy`) {
+      state = `game`;
+    }
+    if (coin.gameState === `DodgeSadness`) {
+      state = `game`;
+    }
+    if (coin.gameState === `KeepJoy`) {
+      state = `game`;
+    }
+    if (coin.gameState === `SoundPlay`) {
+      state = `game`;
+    }
+    if (coin.gameState === `VisualPlay`) {
+      state = `game`;
+    }
   }
 }
+
+function game() {
+  //creating a canvas for the game to play inside
+  createCanvas(windowWidth*0.8,windowHeight*0.8);
+
+  //creating a button to go back to simulation state
+  gobackButton();
+
+  //allows for display and movement of coin using class
+  for (let i = 0; i < coins.length; i++) {
+    let coin = coins[i];
+    coin.display();
+    coin.drag(); //interaction with mouse being pressed
+
+    //loading the game state on to each coin
+    if (gameState === `CatchJoy`) {
+      state = `game`;
+    }
+    if (gameState === `DodgeSadness`) {
+      state = `game`;
+    }
+    if (gameState === `KeepJoy`) {
+      state = `game`;
+    }
+    if (gameState === `SoundPlay`) {
+      state = `game`;
+    }
+    if (gameState === `VisualPlay`) {
+      state = `game`;
+    }
+  }
+
+}
+
 
 
 //USER INTERACTION
@@ -166,39 +221,25 @@ function mouseReleased() {
     coin.checkForSlot(slot); //check if coin is touching slot
   }
 }
+//a button to go back to simulation state while in game state
+function gobackButton() {
 
+  let gobackButton = {
+    x: windowWidth -100,
+    y: windowHeight*1.0 - 100,
+    size: 100,
+    image: coinImage,
+    text: `< GO BACK`,
+  };
 
-//INTERACTIVE BACKGROUND
-//fun interactive background that reacts to the movement of the users mouse
-function interactiveBackground() {
-  //setting up for loop for smileys across window
-  let smileWidth = 40; //setting smiley size
-  let smileHeight = smileWidth; //square
-  let mouseColor = color(`rgb(255, 255, 0)`); //smiley color
-
-  for (let x = 5; x < width-5; x+=50) { //setting grid for smileys on x-axis
-    for (let y = 5; y < height-5; y+=50) { //setting grid for smileys on y-axis
-      //base
-      push();
-      stroke(mouseColor);
-      strokeWeight(5);
-      noFill();
-      ellipse(x+20,y+20,smileWidth,smileHeight);
-      pop();
-      //eyes
-      push();
-      fill(mouseColor);
-      noStroke();
-      ellipse(x+12,y+14,smileWidth/8,smileWidth/8);
-      ellipse(x+28,y+14,smileWidth/8,smileWidth/8);
-      //mouth
-      push();
-      stroke(mouseColor);
-      strokeWeight(5);
-      noFill();
-      arc(x+20,y+20,25,25,0,PI,OPEN);
-      pop();
-    }
-  }
-
+  push();
+  //display for image
+  imageMode(CENTER);
+  image(gobackButton.image,gobackButton.x,gobackButton.y,gobackButton.size,gobackButton.size);
+  //display for text
+  textSize(30);
+  fill(255);
+  textAlign(CENTER,CENTER);
+  text(gobackButton.text,0,this.size/2);
+  pop();
 }
